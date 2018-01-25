@@ -132,4 +132,28 @@ app.get('/users/me', authenticate, (req, res) => {
     console.log(`Started up at port ${port}.`);
   });
 //}
+
+// POST/Events
+app.post('/tb_events', (req, res) => {
+  let event_input = [
+    'name',
+    'genre',
+    'date',
+    'place',
+    'age_suggest',
+    'num_people',
+    'time_duration',
+    'description'
+  ];
+
+  console.log(`req ${req.name}`);
+  let tb_event = new Tb_event(_.pick(req.body, event_input));
+  console.log(tb_event);
+  tb_event.save().then((doc) => {
+    res.send(doc);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
 module.exports = { app }; //since the module we want to export also called app
