@@ -146,11 +146,82 @@ app.post('/tb_events', (req, res) => {
     'description'
   ];
 
-  console.log(`req ${req.name}`);
   let tb_event = new Tb_event(_.pick(req.body, event_input));
   console.log(tb_event);
   tb_event.save().then((doc) => {
     res.send(doc);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
+app.get('/tb_events', (req, res) => {
+  Tb_event.find().then((tb_event) => {
+    res.send({ tb_event });
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
+app.get('/tb_events/:id', (req, res) => {
+  const id = req.params.id;
+
+  if(!ObjectID.isValid(id)) {
+    return res.status(404).send('The data with this ID is not found');
+  }
+  Tb_event.findById(id).then((tb_event) => {
+    if(!tb_event) {
+      res.status(404).send();
+    } else {
+      res.status(200).send({ tb_event });
+    }
+  }).catch((err) => {
+    res.status(400).send(`Err message is ${err}`);
+  });
+});
+
+app.delete('/tb_events/:id', (req, res) => {
+  const id = req.params.id;
+
+  if(!ObjectID.isValid(id)) {
+    return res.status(404).send('The data with this ID is not found');
+  }
+  Tb_event.findByIdAndRemove(id).then((tb_event) => {
+    if(!tb_event) {
+      res.status(404).send();
+    } else {
+      res.status(200).send({ tb_event });
+    }
+  }).catch((err) => {
+    res.status(400).send();
+  });
+});
+
+app.patch('/tb_events/:id', (req, res) => {
+  const id = req.params.id;
+
+  let event_input_update = [
+    'name',
+    'genre',
+    'date',
+    'place',
+    'age_suggest',
+    'num_people',
+    'time_duration',
+    'description'
+  ];
+  let body = _.pick(req.body, event_input_update);
+
+  if(!ObjectID.isValid(id)) {
+    return res.status(400).send('The data with this ID is not found');
+  }
+
+  Tb_event.findByIdAndUpdate(id, { $set: body }, { new: true }).then((tb_event) => {
+    if(!tb_event) {
+      console.log(`Event is not found`);
+      return res.status(404).send();
+    }
+    res.send({tb_event});
   }).catch((err) => {
     res.status(400).send(err);
   });
