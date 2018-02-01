@@ -16,6 +16,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/todos', (req, res) => {
   let todo = new Todo({
@@ -143,6 +144,7 @@ app.post('/tb_events', (req, res) => {
     'age_suggest',
     'num_people',
     'time_duration',
+    'level',
     'description'
   ];
 

@@ -52,6 +52,10 @@ let Tb_event = mongoose.model('Tb_event', {
       required: true
     }
   }],
+  level: {
+    type: String,
+    required: true
+  },
   description: [{
     comments: {
       type: String,
