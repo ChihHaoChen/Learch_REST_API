@@ -61,7 +61,11 @@ let Tb_event = mongoose.model('Tb_event', {
       type: String,
       minlength: 1
     }
-  }]
+  }],
+  _creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  }
 });
 
 module.exports = { Tb_event };

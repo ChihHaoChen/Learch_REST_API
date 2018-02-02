@@ -16,7 +16,7 @@ if (nconf.get('mongoDatabase')) {
 }
 
 mongoose.Promise = global.Promise;
-mongoose.connect(uri, {useMongoClient: true});
-
+//mongoose.connect(uri, {useMongoClient: true});
+mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true});
 
 module.exports = { mongoose };

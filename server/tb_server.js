@@ -18,9 +18,10 @@ const port = process.env.PORT;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/todos', (req, res) => {
+app.post('/todos', authenticate, (req, res) => {
   let todo = new Todo({
-    text: req.body.text
+    text: req.body.text,
+    _creator: req.user._id
   });
 
   todo.save().then((doc) => {
@@ -30,8 +31,10 @@ app.post('/todos', (req, res) => {
   });
 });
 
-app.get('/todos', (req, res) => {
-  Todo.find().then((todos) => {
+app.get('/todos', authenticate, (req, res) => {
+  Todo.find({
+    _creator: req.user._id
+  }).then((todos) => {
     res.send({todos});
   }, (e) => {
     res.status(400).send(e);
@@ -40,7 +43,7 @@ app.get('/todos', (req, res) => {
 
 // some useful comments to avoid the testing error
 // Uncaught error outside test suite// Uncaught Error: listen EADDRINUSE :::3000
-app.get('/todos/:id', (req, res) => {
+app.get('/todos/:id', authenticate, (req, res) => {
   const id = req.params.id;
 
   // 1st step : check if the id is valid or not by isValid
@@ -48,11 +51,13 @@ app.get('/todos/:id', (req, res) => {
     return res.status(404).send('The data with this ID is not available.');
   }
   else {
-    Todo.findById(id).then((todo) => {
+    Todo.findOne({
+      _id: id,
+      _creator: req.user._id
+    }).then((todo) => {
       if (!todo) {
         res.status(404).send();
       } else {
-        // res.status(200).send(JSON.stringify(todo, undefined, 2));
         res.status(200).send({todo});
       }
     }, (err) => {
@@ -61,7 +66,7 @@ app.get('/todos/:id', (req, res) => {
   }
 });
 
-app.delete('/todos/:id', (req, res) => {
+app.delete('/todos/:id', authenticate, (req, res) => {
   // get the id
   const id = req.params.id;
   // Validate the id -> if not valid, return 404
@@ -69,7 +74,10 @@ app.delete('/todos/:id', (req, res) => {
     return res.status(404).send('The data with this ID is not available.');
   } else {
     // remove todo by ID
-    Todo.findByIdAndRemove(id).then((todo) => {
+    Todo.findOneAndRemove({
+      _id: id,
+      _creator: req.user._id
+    }).then((todo) => {
       if(!todo) {
         res.status(404).send();
       }
@@ -83,7 +91,7 @@ app.delete('/todos/:id', (req, res) => {
   }
 });
 
-app.patch('/todos/:id', (req, res) => {
+app.patch('/todos/:id', authenticate, (req, res) => {
   const id = req.params.id;
 
   let body = _.pick(req.body, ['text', 'completed']);
@@ -98,7 +106,10 @@ app.patch('/todos/:id', (req, res) => {
     body.completedAt = null;
   }
 
-  Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then((todo) => {
+  Todo.findOneAndUpdate({
+    _id: id,
+    _creator: req.user._id
+  }, {$set: body}, {new: true}).then((todo) => {
     if (!todo) {
       return res.status(404).send();
     }
@@ -122,20 +133,37 @@ app.post('/users', (req, res) => {
   });
 });
 
-
 app.get('/users/me', authenticate, (req, res) => {
   // get the value by req.header with the key 'x-auth'
   res.send(req.user);
 });
 
-//if(!module.parent) {
-  app.listen(port, () => {
-    console.log(`Started up at port ${port}.`);
+// POST /users/login(email, body) to regenerate the new token
+app.post('/users/login', (req, res) => {
+  let body = new User(_.pick(req.body, ['email', 'password']));
+
+  User.findByCredentials(body.email, body.password).then((user) => {
+    user.generateAuthToken().then((token) => {
+      res.header('x-auth', token).send(user);
+    });
+  }).catch((e) => {
+    res.status(400).send();
   });
-//}
+});
+
+// this route is used to delete the token when users log out
+app.delete('/users/me/token', authenticate, (req, res) => {
+  req.user.removeToken(req.token).then(() => {
+    res.status(200).send();
+  }).catch(() => {
+    res.status(400).send();
+  });
+
+});
+
 
 // POST/Events
-app.post('/tb_events', (req, res) => {
+app.post('/tb_events', authenticate, (req, res) => {
   let event_input = [
     'name',
     'genre',
@@ -147,9 +175,11 @@ app.post('/tb_events', (req, res) => {
     'level',
     'description'
   ];
+  let pickObj = _.pick(req.body, event_input);
+  let creator = { _creator: req.user._id };
 
-  let tb_event = new Tb_event(_.pick(req.body, event_input));
-  console.log(tb_event);
+  let tb_event = new Tb_event(Object.assign(pickObj, creator));
+
   tb_event.save().then((doc) => {
     res.send(doc);
   }).catch((err) => {
@@ -157,8 +187,22 @@ app.post('/tb_events', (req, res) => {
   });
 });
 
+// The route to fetch all the events
 app.get('/tb_events', (req, res) => {
   Tb_event.find().then((tb_event) => {
+    res.send({ tb_event });
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
+// The route to access the events created by a specific user
+app.get('/tb_events/users/:userId', (req, res) => {
+  const userId = req.params.userId;
+  console.log(`userId is ${userId}`);
+  Tb_event.find({
+    _creator: userId
+  }).then((tb_event) => {
     res.send({ tb_event });
   }).catch((err) => {
     res.status(400).send(err);
@@ -182,13 +226,16 @@ app.get('/tb_events/:id', (req, res) => {
   });
 });
 
-app.delete('/tb_events/:id', (req, res) => {
+app.delete('/tb_events/:id', authenticate, (req, res) => {
   const id = req.params.id;
 
   if(!ObjectID.isValid(id)) {
     return res.status(404).send('The data with this ID is not found');
   }
-  Tb_event.findByIdAndRemove(id).then((tb_event) => {
+  Tb_event.findOneAndRemove({
+    _id: id,
+    _creator: req.user._id
+  }).then((tb_event) => {
     if(!tb_event) {
       res.status(404).send();
     } else {
@@ -199,7 +246,7 @@ app.delete('/tb_events/:id', (req, res) => {
   });
 });
 
-app.patch('/tb_events/:id', (req, res) => {
+app.patch('/tb_events/:id', authenticate, (req, res) => {
   const id = req.params.id;
 
   let event_input_update = [
@@ -218,7 +265,10 @@ app.patch('/tb_events/:id', (req, res) => {
     return res.status(400).send('The data with this ID is not found');
   }
 
-  Tb_event.findByIdAndUpdate(id, { $set: body }, { new: true }).then((tb_event) => {
+  Tb_event.findOneAndUpdate({
+    _id: id,
+    _creator: req.user._id
+  }, { $set: body }, { new: true }).then((tb_event) => {
     if(!tb_event) {
       console.log(`Event is not found`);
       return res.status(404).send();
@@ -228,5 +278,11 @@ app.patch('/tb_events/:id', (req, res) => {
     res.status(400).send(err);
   });
 });
+
+//if(!module.parent) {
+  app.listen(port, () => {
+    console.log(`Started up at port ${port}.`);
+  });
+//}
 
 module.exports = { app }; //since the module we want to export also called app
