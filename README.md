@@ -1,8 +1,8 @@
 <!-- [![Image caption](/project.logo.jpg)](#) -->
 
 # PROJECT
-[d]: #TrainingBuddy API
-The API implementation for TrainingBuddy APP
+##TrainingBuddy API
+###The API implementation for TrainingBuddy APP
 
 **[INSTALL][i] | [USAGE][u] | [API][a] | [AUTHOR][auth] | [CONTRIBUTE][cpl] | [LICENSE][cpl] | [SUPPORT][ps]**
 
