@@ -23,6 +23,7 @@
     "mongodb": "^3.0.1",
     "mongoose": "^4.13.9",
     "nconf": "^0.10.0",
+    "underscore": "^1.8.3",
     "validator": "^9.2.0"
   },
   "devDependencies": {

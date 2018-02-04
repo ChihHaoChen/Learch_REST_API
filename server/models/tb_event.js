@@ -8,58 +8,95 @@ let Tb_event = mongoose.model('Tb_event', {
     minlength: 1,
     trim: true
   },
-  genre: {
+  activityPicked: {
     type: String,
     required: true,
     minlength: 1
   },
-  date: {
-    type: String,
-    required: true,
-    minlength: 1
+  promptVisible: {
+    type: Boolean,
+    default: false
   },
+  isDateFromClicked: {
+    type: Boolean,
+    default: false
+  },
+  isDateToClicked: {
+    type: Boolean,
+    default: false
+  },
+  date: [{
+    dateFrom: {
+      type: String,
+      required: true
+    },
+    dateTo: {
+      type: String,
+      required: true
+    }
+  }],
   place: [{
     geo_lat: {
       type: Number,
-      required: true
+      default: null
     },
     geo_lng: {
       type: Number,
-      required: true
+      default: null
     }
   }],
   age_suggest: [{
     start: {
       type: Number,
-      required: true
+      default: 18
     },
     end: {
       type: Number,
-      required: true
+      default: 80
     }
   }],
   num_people: {
     type: Number,
-    required: true
+    default: 0
   },
   time_duration: [{
-    mins: {
-      type: Number,
-      required: true
+    time: {
+      type: String,
+      required: true,
+      default: '00:00:00'
     },
-    hours: {
-      type: Number,
-      required: true
+    timeFrom: {
+      type: String,
+      required: true,
+      default: '00:00:00'
+    },
+    timeTo: {
+      type: String,
+      required: true,
+      default: '00:00:00'
     }
   }],
   level: {
-    type: String,
-    required: true
+    type: String
   },
   description: [{
     comments: {
       type: String,
-      minlength: 1
+      default: null
+    },
+    rating: {
+      type: Number,
+      default: null
+    }
+  }],
+  uri: [{
+    image_uri: {
+      type: String,
+      default: null
+    },
+    video_uri: {
+      type: String,
+      default: null
     }
   }],
   _creator: {

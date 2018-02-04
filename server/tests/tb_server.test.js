@@ -2,49 +2,61 @@
 const expect = require('expect');
 const request = require('supertest');
 const { ObjectID } = require('mongodb');
+const _ = require('underscore');
 
 const { app } = require('./../tb_server');
-const { Todo } = require('./../models/todo');
 const { User } = require('./../models/user');
 const { Tb_event } = require('./../models/tb_event');
 
-const { todos,
-        populateTodos,
-        users,
-        populateUsers
+const { users,
+        populateUsers,
+        tb_events,
+        populateTb_events
 } = require('./seed/seed');
 
 // beforeEach is used to initiate the test database.
-beforeEach(populateTodos);
 beforeEach(populateUsers);
+beforeEach(populateTb_events);
 
-describe('POST /todos', () => {
-  it('should create a new todo', (done) => {
-    let text = 'Test todo text';
+describe('POST /tb_events', () => {
+  it('should create a new tb_event', (done) => {
+    let test_event = {
+      name: 'test event from server.test.js',
+      activityPicked: 'test genre',
+      date: [{
+        dateFrom: '2018-01-01',
+        dateTo: '2018-12-31'
+      }],
+      time_duration: [{
+        time: '24:00:00',
+        timeFrom: '08:00:00',
+        timeTo: '08:00:00'
+      }]
+    };
 
     request(app)
-      .post('/todos')
+      .post('/tb_events')
       .set('x-auth', users[0].tokens[0].token)
-      .send({ text })
+      .send(test_event)
       .expect(200)
       .expect((res) => {
-        expect(res.body.text).toBe(text);
+        expect(res.body.name).toBe(test_event.name);
       })
       .end((err, res) => {
         if (err) {
           return done(err);
         }
-        Todo.find({text}).then((todos) => {
-          expect(todos.length).toBe(1);
-          expect(todos[0].text).toBe(text);
+        Tb_event.find({name:'test event from server.test.js' }).then((tb_events) => {
+          expect(tb_events.length).toBe(1);
+          expect(tb_events[0].name).toBe(test_event.name);
           done();
         }).catch((e) => done(e));
       });
   });
 
-  it('Should not create todo with invalid body data', (done) => {
+  it('Should not create any tb_event with invalid body data', (done) => {
     request(app)
-      .post('/todos')
+      .post('/tb_events')
       .set('x-auth', users[0].tokens[0].token)
       .send({})
       .expect(400)
@@ -52,53 +64,56 @@ describe('POST /todos', () => {
         if (err) {
           return done(err);
         }
-        Todo.find().then((todos) => {
-          expect(todos.length).toBe(2);
+        Tb_event.find().then((tb_events) => {
+          expect(tb_events.length).toBe(2);
           done();
         }).catch((e) => done(e));
       });
   });
 });
 
-describe('GET /todos', () => {
-  it('Should get all todos', (done) => {
+describe('GET /tb_events', () => {
+  it('Should get all tb_events', (done) => {
     request(app)
-      .get('/todos')
-      .set('x-auth', users[0].tokens[0].token)
+      .get('/tb_events')
+      // .set('x-auth', users[0].tokens[0].token)
       .expect(200)
       .expect((res) => {
-        expect(res.body.todos.length).toBe(1);
+        expect(res.body.tb_events.length).toBe(2);
       })
       .end(done);
   });
 });
 
-describe('GET /todos/:id', () => {
-  it('Should return todo doc', (done) => {
+describe('GET /tb_events/:id', () => {
+  it('Should return tb_event according to the event ID', (done) => {
     request(app)
-      .get(`/todos/${todos[0]._id.toHexString()}`)
-      .set('x-auth', users[0].tokens[0].token)
+      .get(`/tb_events/${tb_events[0]._id.toHexString()}`)
+      // .set('x-auth', users[0].tokens[0].token)
       .expect(200)
       .expect((res) => {
-        expect(res.body.todo.text).toBe(todos[0].text);
+        expect(res.body.tb_event.name).toBe(tb_events[0].name);
       })
       .end(done);
   });
 
-  it('Should not return todo doc', (done) => {
+  it('Should return the tb_event according to the event ID created by other users', (done) => {
     request(app)
-      .get(`/todos/${todos[1]._id.toHexString()}`)
-      .set('x-auth', users[0].tokens[0].token)
-      .expect(404)
+      .get(`/tb_events/${tb_events[1]._id.toHexString()}`)
+      // .set('x-auth', users[0].tokens[0].token)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.tb_event.name).toBe(tb_events[1].name);
+      })
       .end(done);
   });
 
-  it('Should return 404 if todo no found', (done) => {
+  it('Should return 404 if tb_event no found', (done) => {
     let hexId = new ObjectID().toHexString();
 
     request(app)
-      .get(`/todos/${hexId}`)
-      .set('x-auth', users[0].tokens[0].token)
+      .get(`/tb_events/${hexId}`)
+      // .set('x-auth', users[0].tokens[0].token)
       .expect(404)
       .end(done);
   });
@@ -106,139 +121,142 @@ describe('GET /todos/:id', () => {
   it('Should return 404 for non-object ids', (done) => {
 
     request(app)
-      .get('/todos/1234abcd')
-      .set('x-auth', users[0].tokens[0].token)
+      .get('/tb_events/1234abcd')
+      // .set('x-auth', users[0].tokens[0].token)
       .expect(404)
       .end(done);
   });
 
 });
 
-describe('DELETE /todos/:id', () => {
-  it('Should remove a todo', (done) => {
-    var hexId = todos[1]._id.toHexString();
+describe('DELETE /tb_events/:id', () => {
+  it('Should remove a tb_event', (done) => {
+    var hexId = tb_events[1]._id.toHexString();
 
     request(app)
-      .delete(`/todos/${hexId}`)
+      .delete(`/tb_events/${hexId}`)
       .set('x-auth', users[1].tokens[0].token)
       .expect(200)
       .expect((res) => {
-        expect(res.body.todo._id).toBe(hexId);
+        expect(res.body.tb_event._id).toBe(hexId);
       })
       .end((err, res) => {
         //query database using findById toNotExist
         if (err) {
           return done(err);
         }
-        Todo.findById(hexId).then((todo) => {
-          expect(todo).toBeFalsy(); // change toNotExist -> toBeNull, or toBeFalsy
+        Tb_event.findById(hexId).then((tb_event) => {
+          expect(tb_event).toBeFalsy(); // change toNotExist -> toBeNull, or toBeFalsy
           done();
         }).catch((e) => done(e));
       });
   });
 
-  it('Should not remove a todo', (done) => {
-    var hexId = todos[0]._id.toHexString();
+  it('Should not remove a tb event created by other user', (done) => {
+    var hexId = tb_events[0]._id.toHexString();
 
     request(app)
-      .delete(`/todos/${hexId}`)
+      .delete(`/tb_events/${hexId}`)
       .set('x-auth', users[1].tokens[0].token)
       .expect(404)
       .end((err, res) => {
-        //query database using findById toNotExist
         if (err) {
           return done(err);
         }
-        Todo.findById(hexId).then((todo) => {
-          expect(todo).toBeTruthy(); // change toNotExist -> toBeNull, or toBeFalsy
+        Tb_event.findById(hexId).then((tb_event) => {
+          expect(tb_event).toBeTruthy(); // change toNotExist -> toBeNull, or toBeFalsy
           done();
         }).catch((e) => done(e));
       });
   });
 
-  it('Should return 404 if todo not found', (done) => {
+  it('Should return 404 if tb_event not found', (done) => {
     let hexId = new ObjectID().toHexString();
 
     request(app)
-      .get(`/todos/${hexId}`)
+      .get(`/tb_events/${hexId}`)
       .set('x-auth', users[1].tokens[0].token)
       .expect(404)
       .end(done);
   });
 
-  it('Should return 404 if object id is invalid', (done) => {
+  it('Should return 404 if tb_event id is invalid', (done) => {
     request(app)
-      .get('/todos/1234abcd')
+      .get('/tb_events/1234abcd')
       .set('x-auth', users[1].tokens[0].token)
       .expect(404)
       .end(done);
   });
 });
 
-describe('PATCH /todos/:id', () => {
-  it('Should update the todo', (done) => {
+describe('PATCH /tb_events/:id', () => {
+  it('Should update the tb_event', (done) => {
     // grab the id of the first item
-    let hexId = todos[0]._id.toHexString();
-    // update text, set completed true
-    let text = 'Text to be updated for test';
-    let completed = true;
+    let hexId = tb_events[0]._id.toHexString();
+    let update_event = {
+      name: 'update event from server.test.js',
+      activityPicked: 'update genre',
+      date: [{
+        dateFrom: '2018-03-03',
+        dateTo: '2018-09-03'
+      }],
+      time_duration: [{
+        time: '12:00:00',
+        timeFrom: '08:00:00',
+        timeTo: '20:00:00'
+      }]
+    };
 
     request(app)
-      .patch(`/todos/${hexId}`)
+      .patch(`/tb_events/${hexId}`)
       .set('x-auth', users[0].tokens[0].token)
-      .send({ text, completed }) // Use ES6
+      .send(update_event) // Use ES6
     //200
       .expect(200)
       .expect((res) => {
-        expect(res.body.todo._id).toBe(hexId);
-        expect(res.body.todo.text).toBe(text);
-        expect(res.body.todo.completed).toBe(true);
-        expect(typeof res.body.todo.completedAt).toBe('number');
-        // expect(res.body.todo.text).toBe(text);
+        expect(res.body.tb_event._id).toBe(hexId);
+        expect(res.body.tb_event.name).toBe(update_event.name);
+        expect(res.body.tb_event.activityPicked).toBe(update_event.activityPicked);
+        expect(res.body.tb_event.date[0].dateFrom).
+          toBe(update_event.date[0].dateFrom);
+        expect(res.body.tb_event.date[0].dateTo).
+          toBe(update_event.date[0].dateTo);
+        expect(res.body.tb_event.time_duration[0].time).
+          toBe(update_event.time_duration[0].time);
+        expect(res.body.tb_event.time_duration[0].timeFrom).
+          toBe(update_event.time_duration[0].timeFrom);
+        expect(res.body.tb_event.time_duration[0].timeTo).
+          toBe(update_event.time_duration[0].timeTo);
       })
-      // text is changed, completed is true, completed is a number, toBeA
       .end(done);
     });
 
-    it('Should not update the todo created by other users', (done) => {
+    it('Should not update the tb_event created by other users', (done) => {
       // grab the id of the first item
-      let hexId = todos[0]._id.toHexString();
-      // update text, set completed true
-      let text = 'Text to be updated for test';
-      let completed = true;
+      let hexId = tb_events[0]._id.toHexString();
+
+      let update_event_user1 = {
+        name: 'update event from server.test.js',
+        activityPicked: 'update genre',
+        date: [{
+          dateFrom: '2018-03-03',
+          dateTo: '2018-09-03'
+        }],
+        time_duration: [{
+          time: '12:00:00',
+          timeFrom: '08:00:00',
+          timeTo: '20:00:00'
+        }]
+      };
 
       request(app)
-        .patch(`/todos/${hexId}`)
+        .patch(`/tb_events/${hexId}`)
         .set('x-auth', users[1].tokens[0].token)
-        .send({ text, completed }) // Use ES6
+        .send(update_event_user1) // Use ES6
       //404
         .expect(404)
         .end(done);
       });
-
-    it('Should clear completedAt when todo is not completed', (done) => {
-      // grab the id of second todo item
-      let hexId = todos[1]._id.toHexString();
-      // update the text, set completed to false
-      let text = 'Change the state of completed from True to False';
-      let completed = false;
-
-      request(app)
-        .patch(`/todos/${hexId}`)
-        .set('x-auth', users[1].tokens[0].token)
-        .send({ text, completed }) // Use ES6
-      //200
-        .expect(200)
-      // text is changed, completed false, completedAt is null .toNotExist
-        .expect((res) => {
-          expect(res.body.todo._id).toBe(hexId);
-          expect(res.body.todo.text).toBe(text);
-          expect(res.body.todo.completed).toBe(false);
-          expect(res.body.todo.completedAt).toBeFalsy();
-        })
-      // text is changed, completed is true, completed is a number, toBeA
-        .end(done);
-    });
 });
 
 describe('GET /users/me', () => {
