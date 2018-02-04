@@ -1,12 +1,10 @@
 <!-- [![Image caption](/project.logo.jpg)](#) -->
 
 # PROJECT
-##TrainingBuddy API
-###The API implementation for TrainingBuddy APP
+## TrainingBuddy API
+### The API implementation for TrainingBuddy APP
 
 **[INSTALL][i] | [USAGE][u] | [API][a] | [AUTHOR][auth] | [CONTRIBUTE][cpl] | [LICENSE][cpl] | [SUPPORT][ps]**
-
-> **KISS** - Keep it simple, stupid!
 
 ```
 Quick usage example...
@@ -24,7 +22,7 @@ Description of the problem that your module solves.
 A brief note on environment/machine/tools requisites
 
 ### INSTALLATION
-[i]: #installation 'Installation guide' 
+[i]: #npm install' 
 
 ```
 Installation/deployment example
