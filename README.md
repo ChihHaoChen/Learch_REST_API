@@ -19,7 +19,11 @@ The repository is used for the development of the back-end for the TrainingBudda
 ## GETTING STARTED
 [gt]: #getting-started 'Getting started guide'
 
-A brief note on environment/machine/tools requisites
+The codes have been uploaded to Heroku, and can be accessed through the HTTP address:
+
+In the following usage guid, the keyword **_url_** will be referred to this address.
+Currently there are two models implemented in this back-end development: _users_ and _tb_events_. Both models support *CRUB* operations with **_Express_** and **_MongoDB_**.
+
 
 ### INSTALLATION
 [i]: #install 'The required libraries' 
@@ -47,7 +51,7 @@ Code examples ...
 
 ## AUTHOR
 [auth]: #author 'Credits & author\'s contacts info '
-You can follow me on [twitter](https://twitter.com/biteofpie) or just [email](mailto:al.neodim@gmail.com) me.
+You can just [email](chao700716@gmail.com) me.
 
 ## ACKNOWLEDGMENTS
 [acc]: acknowledgments
