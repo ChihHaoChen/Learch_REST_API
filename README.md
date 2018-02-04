@@ -38,6 +38,12 @@ Routes about tb_events:
 - DELETE /tb_events/:id
 - PATCH /tb_events/:id
 
+Public routes can be invokded without tokens, while private ones require tokens to execute the operations. 
+Therefore, users can check the tb_events created by other users, but they can only delete and update their own tb_events.
+All tb_events will be created with users' token as one of the key value. 
+
+Regarding the security of users' data, all passwords that users provided will be hashed before being stored in our database. In current stage, the authentication only allows new users to sign up with their **email/password**. There are some other tasks are on-going for TrainingBuddy APP.
+
 
 ### INSTALLATION
 [i]: #install 'The required libraries' 
