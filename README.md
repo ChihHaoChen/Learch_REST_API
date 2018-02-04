@@ -14,7 +14,7 @@ Quick usage example...
 ...repeat until it gets clear.
 ```
 ## MOTIVATION
-Description of the problem that your module solves.
+The repository is used for the development of the back-end for the TrainingBudday APP.
 
 ## GETTING STARTED
 [gt]: #getting-started 'Getting started guide'
@@ -22,10 +22,10 @@ Description of the problem that your module solves.
 A brief note on environment/machine/tools requisites
 
 ### INSTALLATION
-[i]: #npm install' 
+[i]: #install 'The required libraries' 
 
 ```
-Installation/deployment example
+npm install
 ```
 
 ### USAGE
