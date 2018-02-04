@@ -25,17 +25,18 @@ In the following usage guide, the keyword **_url_** will be referred to this add
 Currently there are two models implemented in this back-end development: _users_ and _tb_events_. Both models support *CRUB* operations with **_Express_** and **_MongoDB_**.
 
 Routes about users:
-```
 - POST /users
 - GET /users/me
 - DELETE /users/me/token
 - POST /users/login
-```
 
 Routes about tb_events:
-```
-
-```
+- POST /tb_events
+- GET /tb_events
+- GET /tb_events/:id
+- GET /tb_events/users/:userId
+- DELETE /tb_events/:id
+- PATCH /tb_events/:id
 
 
 ### INSTALLATION
