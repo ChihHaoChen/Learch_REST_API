@@ -14,15 +14,28 @@ Quick usage example...
 ...repeat until it gets clear.
 ```
 ## MOTIVATION
-The repository is used for the development of the back-end for the TrainingBudday APP.
+This private repository is used to develope the back-end for the TrainingBudday APP.
 
 ## GETTING STARTED
 [gt]: #getting-started 'Getting started guide'
 
 The codes have been uploaded to Heroku, and can be accessed through the HTTP address:
 
-In the following usage guid, the keyword **_url_** will be referred to this address.
+In the following usage guide, the keyword **_url_** will be referred to this address.
 Currently there are two models implemented in this back-end development: _users_ and _tb_events_. Both models support *CRUB* operations with **_Express_** and **_MongoDB_**.
+
+Routes about users:
+```
+- POST /users
+- GET /users/me
+- DELETE /users/me/token
+- POST /users/login
+```
+
+Routes about tb_events:
+```
+
+```
 
 
 ### INSTALLATION
