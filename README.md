@@ -55,19 +55,40 @@ npm install
 
 - POST /users => To allow new users to sign up.
 ```
-curl --request POST \
-  --url 'https://secret-tor-77277.herokuapp.com/users' \
-  --header 'Content-Type: application/json' \
-  --data '{
-	"email": "chao0716@hotmail.com",
-	"password": "test123"
-}'
+var http = require("http");
+
+var options = {
+  "method": "POST",
+  "hostname": [
+    "https://secret-tor-77277.herokuapp.com"
+  ],
+  "path": [
+    "users"
+  ],
+  "headers": {
+    "Content-Type": "application/json"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ email: 'chao0716_8@gmail.com', password: 'test123' }));
+req.end();
 ```
 - GET /users/me => This route can be used to fetch users' tokens.
 ```
-curl --request GET \
-  --url 'https://secret-tor-77277.herokuapp.com/users/me' \
-  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
+
 ```
 - DELETE /users => This **private** route allows users to log out, and to delete the tokens attached to the users.
 ```
