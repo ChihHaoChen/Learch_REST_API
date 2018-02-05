@@ -176,6 +176,7 @@ curl --request PATCH \
  All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes).
 ## Database
 [d]: #database 'Module\'s API description'
+The database employed in this back-end API is mLab, a platform of Database-as-a-Service for MongoDB. 
 
 #### WARNING!:   
 Api description should be given here.
