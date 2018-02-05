@@ -58,7 +58,7 @@ npm install
 ### USAGE
 [u]: #usage 'Product usage'
 
-- POST /users : to allow new users to sign up 
+- POST /users => To allow new users to sign up.
 ```
 curl --request POST \
   --url 'https://secret-tor-77277.herokuapp.com/users' \
@@ -68,19 +68,19 @@ curl --request POST \
 	"password": "test123"
 }'
 ```
-- GET /users: this route can be used to fetch users' tokens
+- GET /users => This route can be used to fetch users' tokens.
 ```
 curl --request GET \
   --url 'https://secret-tor-77277.herokuapp.com/users/me' \
   --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
 ```
-- DELETE /users: to allow users to log out
+- DELETE /users => To allow users to log out, and to delete the tokens attached to the users.
 ```
 curl --request DELETE \
   --url 'https://secret-tor-77277.herokuapp.com/users/me/token' \
   --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
 ```
-- POST /users/login: to allow users who have signed on before to log on 
+- POST /users/login => To allow users who have signed on before to log on, and to give users a new token for private routes. 
 ```
 curl --request POST \
   --url 'https://secret-tor-77277.herokuapp.com/users/login' \
@@ -90,7 +90,89 @@ curl --request POST \
 	"password": "test123"
 }'
 ```
-
+- POST /tb_events => This **private** route will allow users to post tb_events.
+```
+curl --request POST \
+  --url 'https://secret-tor-77277.herokuapp.com/tb_events' \
+  --header 'Content-Type: application/json' \
+  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4' \
+  --data '{
+	"name": "Body Building",
+	"activityPicked": "Training",
+	"date": [{
+		"dateFrom": "2018-02-01",
+		"dateTo": "2018-03-01"
+	}],
+	"place": [{ 
+		"geo_lat" : 20,
+		"geo_lng" : 50 
+	}],
+	"age_suggest": [{ 
+		"start": 18,
+		"end": 50 
+		
+	}],
+	"num_people": 80,
+	"time_duration": [{
+		"time": "02:00:00",
+		"timeFrom" : "18:00:00",
+		"timeTo": "20:00:00"
+	}],
+	"level": "beginner",
+	"description": [{
+		"comments": "For muscles",
+		"rating": 4.7
+	}]
+}'
+```
+- GET /tb_events/:id => This route allows users to fetch a specific tb_event based on their ID.
+```
+curl --request GET \
+  --url 'https://secret-tor-77277.herokuapp.com/tb_events/5a77ab39c8a317001446428f' \
+  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
+```
+ - GET /tb_events/users/:userId => This route allows users to fetch tb_events posted by a specific user with his/her userID.
+ ```
+ curl --request GET \
+  --url 'https://secret-tor-77277.herokuapp.com/tb_events/users/5a771ea0599d18031aec6a76' \
+  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
+ ```
+ - DELETE /tb_events/:id => This **private** route gives users to delete tb_events they posted.
+ ```
+ curl --request DELETE \
+  --url 'https://secret-tor-77277.herokuapp.com/tb_events/5a77ab39c8a317001446428f' \
+  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
+ ```
+ - PATCH /tb_events/:id => This **private** route allows users to update the tb_events they created before according to the event ID.
+ ```
+curl --request PATCH \
+  --url 'https://secret-tor-77277.herokuapp.com/tb_events/5a77ab39c8a317001446428f' \
+  --header 'Content-Type: application/json' \
+  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4' \
+  --data '{
+	"name": "body building - advanced level course.",
+	"genre": "Training",
+	"date": "2018-02-28",
+	"place": [{ 
+		"geo_lat" : 50,
+		"geo_lng" : 50 
+	}],
+	"age_suggest": [{ 
+		"start": 18,
+		"end": 60 
+		
+	}],
+	"num_people": 20,
+	"time_duration": [{
+		"mins": 30,
+		"hours" : 1
+	}],
+	"description": [{
+		"comments": "For totally beginners."
+	}]
+}' 
+ ```
+ 
 ## API
 [a]: #api 'Module\'s API description'
 
