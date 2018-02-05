@@ -403,19 +403,14 @@ req.write(JSON.stringify({ name: 'body building - advanced level course.',
 req.end();
  ```
  
- All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes).
+ All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes). In addition, a [test file](https://github.com/ChihHaoChen/tb_api/blob/master/server/tests/tb_server.test.js) has been uploaded to run self-test, which will be helpful to know how to send reqeusts and fetch responses. 
 ## Database
 [d]: #database 'Module\'s API description'
 The database employed in this back-end API is mLab, a platform of Database-as-a-Service for MongoDB. 
-Currently, all the users/tb_events data is stored in [ds125058.mlab.com], and can be accessed through [Robo3T](https://robomongo.org/) the account/password, and port number shown below.
+Currently, all the users/tb_events data is stored in [ds125058.mlab.com], and can be accessed through [Robo3T](https://robomongo.org/) with the account(heroku_cmc27t52)/password(49is08vu6t3ird8chd9t494igo), and port number shown below.
 
 ![Optional Text](images/Heroku_api_setting1.png)
 ![Optional Text](images/Heroku_api_setting2.png)
-#### WARNING!:   
-Api description should be given here.
-```
-Code examples ...
-```
 
 ## AUTHOR
 [auth]: #author 'Credits & author\'s contacts info '
