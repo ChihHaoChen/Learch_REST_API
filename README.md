@@ -44,8 +44,9 @@ All tb_events will be created with users' token as one of the key value.
 
 Regarding the security of users' data, all passwords that users provided will be hashed before being stored in our database. In current stage, the authentication only allows new users to sign up with their **email/password**. There are some other tasks are on-going for TrainingBuddy APP.
 
-- [ ] Integration of Facebook authentication
-- [ ] To upload pictures or videos of users/tb_events   
+- [ ] Integration of Facebook authentication.
+- [ ] To upload pictures or videos of users/tb_events.
+- [ ] Other features may be supported in the future.
 
 ### INSTALLATION
 [i]: #install 'The required libraries' 
@@ -57,9 +58,15 @@ npm install
 ### USAGE
 [u]: #usage 'Product usage'
 
-
+- POST /users : to allow new users to sign up 
 ```
-Give more elaborate example here.
+curl --request POST \
+  --url 'http://localhost:3000/users' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"email": "chao0716_8@gmail.com",
+	"password": "test123"
+}'
 ```
 
 ## API
