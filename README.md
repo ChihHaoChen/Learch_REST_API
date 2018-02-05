@@ -175,7 +175,7 @@ curl --request PATCH \
  
  All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes).
 ## Database
-[d]: #Database 'Module\'s API description'
+[d]: #database 'Module\'s API description'
 
 #### WARNING!:   
 Api description should be given here.
