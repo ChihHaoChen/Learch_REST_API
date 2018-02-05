@@ -177,7 +177,7 @@ curl --request PATCH \
 ## Database
 [d]: #database 'Module\'s API description'
 The database employed in this back-end API is mLab, a platform of Database-as-a-Service for MongoDB. 
-
+Currently, all the users/tb_events data is stored in [ds125058.mlab.com](ds125058.mlab.com).
 #### WARNING!:   
 Api description should be given here.
 ```
