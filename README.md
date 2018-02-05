@@ -61,10 +61,32 @@ npm install
 - POST /users : to allow new users to sign up 
 ```
 curl --request POST \
-  --url 'http://localhost:3000/users' \
+  --url 'https://secret-tor-77277.herokuapp.com/users' \
   --header 'Content-Type: application/json' \
   --data '{
-	"email": "chao0716_8@gmail.com",
+	"email": "chao0716@hotmail.com",
+	"password": "test123"
+}'
+```
+- GET /users: this route can be used to fetch users' tokens
+```
+curl --request GET \
+  --url 'https://secret-tor-77277.herokuapp.com/users/me' \
+  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
+```
+- DELETE /users: to allow users to log out
+```
+curl --request DELETE \
+  --url 'https://secret-tor-77277.herokuapp.com/users/me/token' \
+  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
+```
+- POST /users/login: to allow users who have signed on before to log on 
+```
+curl --request POST \
+  --url 'https://secret-tor-77277.herokuapp.com/users/login' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"email": "chao0716@hotmail.com",
 	"password": "test123"
 }'
 ```
