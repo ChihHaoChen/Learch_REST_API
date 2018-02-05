@@ -88,117 +88,326 @@ req.end();
 ```
 - GET /users/me => This route can be used to fetch users' tokens.
 ```
+var http = require("http");
 
+var options = {
+  "method": "GET",
+  "hostname": [
+    "https://secret-tor-77277.herokuapp.com"
+  ],
+  "path": [
+    "users",
+    "me"
+  ],
+  "headers": {
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
-- DELETE /users => This **private** route allows users to log out, and to delete the tokens attached to the users.
+- DELETE /users/me/token => This **private** route allows users to log out, and to delete the tokens attached to the users.
 ```
-curl --request DELETE \
-  --url 'https://secret-tor-77277.herokuapp.com/users/me/token' \
-  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
+var http = require("http");
+
+var options = {
+  "method": "DELETE",
+  "hostname": [
+    "https://secret-tor-77277.herokuapp.com"
+  ],
+  "path": [
+    "users",
+    "me",
+    "token"
+  ],
+  "headers": {
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 - POST /users/login => To allow a user who has signed on before to log on, and to give him/her a new token for private routes. 
 ```
-curl --request POST \
-  --url 'https://secret-tor-77277.herokuapp.com/users/login' \
-  --header 'Content-Type: application/json' \
-  --data '{
-	"email": "chao0716@hotmail.com",
-	"password": "test123"
-}'
+var http = require("http");
+
+var options = {
+  "method": "POST",
+  "hostname": [
+    "https://secret-tor-77277.herokuapp.com"
+  ],
+  "path": [
+    "users",
+    "login"
+  ],
+  "headers": {
+    "Content-Type": "application/json"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ email: 'chao0716_111@gmail.com', password: 'test123' }));
+req.end();
 ```
 - POST /tb_events => This **private** route allows a user to post tb_events.
 ```
-curl --request POST \
-  --url 'https://secret-tor-77277.herokuapp.com/tb_events' \
-  --header 'Content-Type: application/json' \
-  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4' \
-  --data '{
-	"name": "Body Building",
-	"activityPicked": "Training",
-	"date": [{
-		"dateFrom": "2018-02-01",
-		"dateTo": "2018-03-01"
-	}],
-	"place": [{ 
-		"geo_lat" : 20,
-		"geo_lng" : 50 
-	}],
-	"age_suggest": [{ 
-		"start": 18,
-		"end": 50 
-		
-	}],
-	"num_people": 80,
-	"time_duration": [{
-		"time": "02:00:00",
-		"timeFrom" : "18:00:00",
-		"timeTo": "20:00:00"
-	}],
-	"level": "beginner",
-	"description": [{
-		"comments": "For muscles",
-		"rating": 4.7
-	}]
-}'
+var http = require("http");
+
+var options = {
+  "method": "POST",
+  "hostname": [
+    "https://secret-tor-77277.herokuapp.com"
+  ],
+  "path": [
+    "tb_events"
+  ],
+  "headers": {
+    "Content-Type": "application/json",
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ name: 'Body Building',
+  activityPicked: 'Training',
+  date: [ { dateFrom: '2018-02-01', dateTo: '2018-03-01' } ],
+  place: [ { geo_lat: 20, geo_lng: 50 } ],
+  age_suggest: [ { start: 18, end: 50 } ],
+  num_people: 80,
+  time_duration: [ { time: '02:00:00', timeFrom: '18:00:00', timeTo: '20:00:00' } ],
+  level: 'beginner',
+  description: [ { comments: 'For muscles', rating: 4.7 } ] }));
+req.end();
 ```
 - GET /tb_events => This route allows users to see all available tb_events.
 ```
-curl --request GET \
-  --url 'https://secret-tor-77277.herokuapp.com/tb_events/'
+var http = require("http");
+
+var options = {
+  "method": "GET",
+  "hostname": [
+    "https://secret-tor-77277.herokuapp.com"
+  ],
+  "path": [
+    "tb_events",
+    ""
+  ],
+  "headers": {}
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 - GET /tb_events/:id => This route allows users to fetch a specific tb_event based on their event ID.
 ```
-curl --request GET \
-  --url 'https://secret-tor-77277.herokuapp.com/tb_events/5a77ab39c8a317001446428f' \
-  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
+var http = require("http");
+
+var options = {
+  "method": "GET",
+  "hostname": [
+    "https://secret-tor-77277.herokuapp.com"
+  ],
+  "path": [
+    "tb_events",
+    "5a77ab39c8a317001446428f"
+  ],
+  "headers": {
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
  - GET /tb_events/users/:userId => This **private** route allows users to fetch tb_events posted by a specific user according to his/her userID.
  ```
- curl --request GET \
-  --url 'https://secret-tor-77277.herokuapp.com/tb_events/users/5a771ea0599d18031aec6a76' \
-  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
+ var http = require("http");
+
+var options = {
+  "method": "GET",
+  "hostname": [
+    "https://secret-tor-77277.herokuapp.com"
+  ],
+  "path": [
+    "tb_events",
+    "users",
+    "5a771ea0599d18031aec6a76"
+  ],
+  "headers": {
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
  ```
  - DELETE /tb_events/:id => This **private** route gives users to delete tb_events they posted.
  ```
- curl --request DELETE \
-  --url 'https://secret-tor-77277.herokuapp.com/tb_events/5a77ab39c8a317001446428f' \
-  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
+ var http = require("http");
+
+var options = {
+  "method": "DELETE",
+  "hostname": [
+    "https://secret-tor-77277.herokuapp.com"
+  ],
+  "path": [
+    "tb_events",
+    "5a77ab39c8a317001446428f"
+  ],
+  "headers": {
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
  ```
  - PATCH /tb_events/:id => This **private** route allows users to update the tb_events they created before according to the event ID.
  ```
-curl --request PATCH \
-  --url 'https://secret-tor-77277.herokuapp.com/tb_events/5a77ab39c8a317001446428f' \
-  --header 'Content-Type: application/json' \
-  --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4' \
-  --data '{
-	"name": "body building - advanced level course.",
-	"genre": "Training",
-	"date": "2018-02-28",
-	"place": [{ 
-		"geo_lat" : 50,
-		"geo_lng" : 50 
-	}],
-	"age_suggest": [{ 
-		"start": 18,
-		"end": 60 
-		
-	}],
-	"num_people": 20,
-	"time_duration": [{
-		"mins": 30,
-		"hours" : 1
-	}],
-	"description": [{
-		"comments": "For totally beginners."
-	}]
-}' 
+var http = require("http");
+
+var options = {
+  "method": "PATCH",
+  "hostname": [
+    "https://secret-tor-77277.herokuapp.com"
+  ],
+  "path": [
+    "tb_events",
+    "5a77ab39c8a317001446428f"
+  ],
+  "headers": {
+    "Content-Type": "application/json",
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ name: 'body building - advanced level course.',
+  genre: 'Training',
+  date: '2018-02-28',
+  place: [ { geo_lat: 50, geo_lng: 50 } ],
+  age_suggest: [ { start: 18, end: 60 } ],
+  num_people: 20,
+  time_duration: [ { mins: 30, hours: 1 } ],
+  description: [ { comments: 'For totally beginners.' } ] }));
+req.end();
  ```
  
  All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes).
 ## Database
 [d]: #database 'Module\'s API description'
 The database employed in this back-end API is mLab, a platform of Database-as-a-Service for MongoDB. 
-Currently, all the users/tb_events data is stored in [ds125058.mlab.com](ds125058.mlab.com), and can be accessed based on the account/password, and port number shown below.
+Currently, all the users/tb_events data is stored in [ds125058.mlab.com], and can be accessed based on the account/password, and port number shown below.
 
 #### WARNING!:   
 Api description should be given here.
