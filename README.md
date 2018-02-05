@@ -125,6 +125,11 @@ curl --request POST \
 	}]
 }'
 ```
+- GET /tb_events => This route allows users to see all available tb_events.
+```
+curl --request GET \
+  --url 'https://secret-tor-77277.herokuapp.com/tb_events/'
+```
 - GET /tb_events/:id => This route allows users to fetch a specific tb_event based on their ID.
 ```
 curl --request GET \
