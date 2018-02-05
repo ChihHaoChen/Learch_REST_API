@@ -4,7 +4,7 @@
 ## TrainingBuddy API
 ### The API implementation for TrainingBuddy APP
 
-**[INSTALL][i] | [USAGE][u] | [API][a] | [AUTHOR][auth] | [CONTRIBUTE][cpl] | [LICENSE][cpl] | [SUPPORT][ps]**
+**[INSTALL][i] | [USAGE][u] | [Database][d] | [AUTHOR][auth] | [CONTRIBUTE][cpl] | [LICENSE][cpl] | [SUPPORT][ps]**
 
 ## MOTIVATION
 This private repository is used to develope the back-end for the TrainingBudday APP.
@@ -14,7 +14,9 @@ This private repository is used to develope the back-end for the TrainingBudday 
 
 The codes have been uploaded to Heroku, and can be accessed through the HTTP address:
 
-In the following usage guide, the keyword **_url_** will be referred to this address.
+[https://secret-tor-77277.herokuapp.com](https://secret-tor-77277.herokuapp.com).
+
+In the following usage guide, the keyword **_url_** will be referred to this HTTP address.
 Currently there are two models implemented in this back-end development: _users_ and _tb_events_. Both models support *CRUB* operations with **_Express_** and **_MongoDB_**.
 
 Routes about users:
@@ -172,8 +174,8 @@ curl --request PATCH \
  ```
  
  All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes).
-## API
-[a]: #api 'Module\'s API description'
+## Database
+[d]: #Database 'Module\'s API description'
 
 #### WARNING!:   
 Api description should be given here.
