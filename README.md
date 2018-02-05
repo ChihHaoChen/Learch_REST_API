@@ -6,13 +6,6 @@
 
 **[INSTALL][i] | [USAGE][u] | [API][a] | [AUTHOR][auth] | [CONTRIBUTE][cpl] | [LICENSE][cpl] | [SUPPORT][ps]**
 
-```
-Quick usage example...
-```
-
-```
-...repeat until it gets clear.
-```
 ## MOTIVATION
 This private repository is used to develope the back-end for the TrainingBudday APP.
 
@@ -178,6 +171,7 @@ curl --request PATCH \
 }' 
  ```
  
+ All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes).
 ## API
 [a]: #api 'Module\'s API description'
 
