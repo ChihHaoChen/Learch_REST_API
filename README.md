@@ -403,7 +403,7 @@ req.write(JSON.stringify({ name: 'body building - advanced level course.',
 req.end();
  ```
  
- All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes). In addition, a [test file](https://github.com/ChihHaoChen/tb_api/blob/master/server/tests/tb_server.test.js) has been uploaded to run self-test, which will be helpful to know how to send reqeusts and fetch responses. 
+ All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes). In addition, a [test file](https://github.com/ChihHaoChen/tb_api/blob/master/server/tests/tb_server.test.js) has been uploaded to run self-test, which will be helpful about how to send reqeusts and fetch responses through this API. 
 ## Database
 [d]: #database 'Module\'s API description'
 The database employed in this back-end API is mLab, a platform of Database-as-a-Service for MongoDB. 
