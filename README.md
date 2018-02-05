@@ -68,19 +68,19 @@ curl --request POST \
 	"password": "test123"
 }'
 ```
-- GET /users => This route can be used to fetch users' tokens.
+- GET /users/me => This route can be used to fetch users' tokens.
 ```
 curl --request GET \
   --url 'https://secret-tor-77277.herokuapp.com/users/me' \
   --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
 ```
-- DELETE /users => To allow users to log out, and to delete the tokens attached to the users.
+- DELETE /users => This **private** route allows users to log out, and to delete the tokens attached to the users.
 ```
 curl --request DELETE \
   --url 'https://secret-tor-77277.herokuapp.com/users/me/token' \
   --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
 ```
-- POST /users/login => To allow users who have signed on before to log on, and to give users a new token for private routes. 
+- POST /users/login => To allow a user who has signed on before to log on, and to give him/her a new token for private routes. 
 ```
 curl --request POST \
   --url 'https://secret-tor-77277.herokuapp.com/users/login' \
@@ -90,7 +90,7 @@ curl --request POST \
 	"password": "test123"
 }'
 ```
-- POST /tb_events => This **private** route will allow users to post tb_events.
+- POST /tb_events => This **private** route allows a user to post tb_events.
 ```
 curl --request POST \
   --url 'https://secret-tor-77277.herokuapp.com/tb_events' \
@@ -130,13 +130,13 @@ curl --request POST \
 curl --request GET \
   --url 'https://secret-tor-77277.herokuapp.com/tb_events/'
 ```
-- GET /tb_events/:id => This route allows users to fetch a specific tb_event based on their ID.
+- GET /tb_events/:id => This route allows users to fetch a specific tb_event based on their event ID.
 ```
 curl --request GET \
   --url 'https://secret-tor-77277.herokuapp.com/tb_events/5a77ab39c8a317001446428f' \
   --header 'x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4'
 ```
- - GET /tb_events/users/:userId => This route allows users to fetch tb_events posted by a specific user with his/her userID.
+ - GET /tb_events/users/:userId => This **private** route allows users to fetch tb_events posted by a specific user according to his/her userID.
  ```
  curl --request GET \
   --url 'https://secret-tor-77277.herokuapp.com/tb_events/users/5a771ea0599d18031aec6a76' \
