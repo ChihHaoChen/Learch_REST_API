@@ -407,8 +407,10 @@ req.end();
 ## Database
 [d]: #database 'Module\'s API description'
 The database employed in this back-end API is mLab, a platform of Database-as-a-Service for MongoDB. 
-Currently, all the users/tb_events data is stored in [ds125058.mlab.com], and can be accessed based on the account/password, and port number shown below.
+Currently, all the users/tb_events data is stored in [ds125058.mlab.com], and can be accessed through [Robo3T](https://robomongo.org/) the account/password, and port number shown below.
 
+![Optional Text](images/Heroku_api_setting1.png)
+![Optional Text](images/Heroku_api_setting2.png)
 #### WARNING!:   
 Api description should be given here.
 ```
@@ -424,8 +426,7 @@ You can just [email](chao700716@gmail.com) me.
 
 List of people and project that inspired creation of this one:
 
-- @PurpleBooth for his readme template posted [here](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-- @jxson for his [readme](https://gist.github.com/jxson/1784669) example as well.
+
 - Github guides for their precious [documenting your project](https://guides.github.com/features/wikis/#creating-a-readme) article concerning readme creation
 ## CONTRIBUTION & LICENSE
 [cpl]:#contribution--license 'Contribution guide & license info'
