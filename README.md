@@ -39,11 +39,11 @@ Regarding the security of users' data, all passwords that users provided will be
 
 - [ ] Integration of Facebook authentication.
 - [ ] To upload pictures or videos of users/tb_events.
-- [ ] Other features may be supported in the future.
+- [ ] Other features may also be supported in the future.
 
 ### INSTALLATION
 [i]: #install 'The required libraries' 
-
+All the required libraries can be found in package.json.
 ```
 npm install
 ```
