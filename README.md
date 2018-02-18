@@ -14,7 +14,7 @@ This private repository is used to develope the back-end for the TrainingBudday 
 
 The codes have been uploaded to Heroku, and can be accessed through the HTTP address:
 
-[https://secret-tor-77277.herokuapp.com](https://secret-tor-77277.herokuapp.com).
+[159.203.33.255:3000](https//159.203.33.255:3000), where 3000 is the default port number for this API.
 
 In the following usage guide, the keyword **_url_** will be referred to this HTTP address.
 Currently there are two models implemented in this back-end development: _users_ and _tb_events_. Both models support *CRUB* operations with **_Express_** and **_MongoDB_**.
@@ -236,46 +236,13 @@ var http = require("http");
 var options = {
   "method": "GET",
   "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
+    "159.203.33.255:3000"
   ],
   "path": [
     "tb_events",
     ""
   ],
   "headers": {}
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-- GET /tb_events/:id => This route allows users to fetch a specific tb_event based on their event ID.
-```
-var http = require("http");
-
-var options = {
-  "method": "GET",
-  "hostname": [
-    "159.203.33.255:3000"
-  ],
-  "path": [
-    "tb_events",
-    "5a88bd9177c95a698b9f1a78"
-  ],
-  "headers": {
-    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTg4YmFmMDc3Yzk1YTY5OGI5ZjFhNWYiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE4OTExNjA5fQ.KCYOqMQu4jLCWnGkWahxegpJ-0UZt6q-LCtURPKquak"
-  }
 };
 
 var req = http.request(options, function (res) {
