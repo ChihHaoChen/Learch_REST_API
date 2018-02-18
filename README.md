@@ -12,7 +12,7 @@ This private repository is used to develope the back-end for the TrainingBudday 
 ## GETTING STARTED
 [gt]: #getting-started 'Getting started guide'
 
-The codes have been uploaded to Heroku, and can be accessed through the HTTP address:
+The codes have been migrated from Heroku to DigitalOcean, and can be accessed through the HTTP address:
 
 [159.203.33.255:3000](https//159.203.33.255:3000), where 3000 is the default port number for this API.
 
