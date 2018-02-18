@@ -14,7 +14,7 @@ This private repository is used to develope the back-end for the TrainingBudday 
 
 The codes have been migrated from Heroku to DigitalOcean, and can be accessed through the HTTP address:
 
-[159.203.33.255:3000](https//159.203.33.255:3000), where 3000 is the default port number for this API.
+[http://159.203.33.255:3000](http//159.203.33.255:3000), where 3000 is the default port number for this API.
 
 In the following usage guide, the keyword **_url_** will be referred to this HTTP address.
 Currently there are two models implemented in this back-end development: _users_ and _tb_events_. Both models support *CRUB* operations with **_Express_** and **_MongoDB_**.
