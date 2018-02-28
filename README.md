@@ -468,10 +468,7 @@ All the requests can also be found in [POSTMAN Documentation](https://documenter
 
 [d]: #database 'Module\'s API description'
 The database employed in this back-end API is installed in DigitalOcean, a platform of Database-as-a-Service for MongoDB.
-Currently, all the users/tb_events data is stored in [ds125058.mlab.com], and can be accessed through [Robo3T](https://robomongo.org/) with the account(heroku_cmc27t52)/password(49is08vu6t3ird8chd9t494igo), and port number shown below.
-
-![Optional Text](images/Heroku_api_setting1.png)
-![Optional Text](images/Heroku_api_setting2.png)
+The database can be accessed through [Robo3T](https://robomongo.org/) with the SSH connect to your local terminal.
 
 ## AUTHOR
 
