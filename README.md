@@ -483,8 +483,9 @@ You can just [email](chao700716@gmail.com) me.
 List of people and project that inspired creation of this one:
 
 * Github guides for their precious [documenting your project](https://guides.github.com/features/wikis/#creating-a-readme) article concerning readme creation
-  ## CONTRIBUTION & LICENSE
-  [cpl]:#contribution--license 'Contribution guide & license info'
+  
+## CONTRIBUTION & LICENSE
+[cpl]:#contribution--license 'Contribution guide & license info'
 
 Check out (if any) <a href='/CONTRIBUTION'>contribution guide</a> or <a href='/LICENSE'>license</a> for more details.
 
