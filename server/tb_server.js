@@ -1,3 +1,4 @@
+
 require('./config/config');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
@@ -17,10 +18,13 @@ const port = process.env.PORT;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/test', (req, res) => {
+  res.send(`The connection to DigitalOcean is okay.`);
+});
+
 // POST/users
 app.post('/users', (req, res) => {
   let user = new User(_.pick(req.body, ['email', 'password']));
-
   user.save().then(() => {
     return user.generateAuthToken();
     //res.send(user);
@@ -31,6 +35,7 @@ app.post('/users', (req, res) => {
   });
 });
 
+// GET/users/me
 app.get('/users/me', authenticate, (req, res) => {
   // get the value by req.header with the key 'x-auth'
   res.send(req.user);
@@ -183,10 +188,8 @@ app.patch('/tb_events/:id', authenticate, (req, res) => {
   });
 });
 
-//if(!module.parent) {
   app.listen(port, () => {
     console.log(`Started up at port ${port}.`);
   });
-//}
 
 module.exports = { app }; //since the module we want to export also called app
