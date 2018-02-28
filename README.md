@@ -12,9 +12,9 @@ This private repository is used to develope the back-end for the TrainingBudday 
 ## GETTING STARTED
 [gt]: #getting-started 'Getting started guide'
 
-The codes have been uploaded to Heroku, and can be accessed through the HTTP address:
+The codes have been migrated from Heroku to DigitalOcean, and can be accessed through the HTTP address:
 
-[https://secret-tor-77277.herokuapp.com](https://secret-tor-77277.herokuapp.com).
+[http://159.203.33.255:3000](http//159.203.33.255:3000), where 3000 is the default port number for this API.
 
 In the following usage guide, the keyword **_url_** will be referred to this HTTP address.
 Currently there are two models implemented in this back-end development: _users_ and _tb_events_. Both models support *CRUB* operations with **_Express_** and **_MongoDB_**.
@@ -60,7 +60,7 @@ var http = require("http");
 var options = {
   "method": "POST",
   "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
+    "159.203.33.255:3000"
   ],
   "path": [
     "users"
@@ -93,14 +93,14 @@ var http = require("http");
 var options = {
   "method": "GET",
   "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
+    "159.203.33.255:3000"
   ],
   "path": [
     "users",
     "me"
   ],
   "headers": {
-    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTg4YmFmMDc3Yzk1YTY5OGI5ZjFhNWYiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE4OTExNjA5fQ.KCYOqMQu4jLCWnGkWahxegpJ-0UZt6q-LCtURPKquak"
   }
 };
 
@@ -126,7 +126,7 @@ var http = require("http");
 var options = {
   "method": "DELETE",
   "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
+    "159.203.33.255:3000"
   ],
   "path": [
     "users",
@@ -134,7 +134,7 @@ var options = {
     "token"
   ],
   "headers": {
-    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTg4YmFmMDc3Yzk1YTY5OGI5ZjFhNWYiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE4OTExNjA5fQ.KCYOqMQu4jLCWnGkWahxegpJ-0UZt6q-LCtURPKquak"
   }
 };
 
@@ -160,7 +160,7 @@ var http = require("http");
 var options = {
   "method": "POST",
   "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
+    "159.203.33.255:3000"
   ],
   "path": [
     "users",
@@ -194,14 +194,14 @@ var http = require("http");
 var options = {
   "method": "POST",
   "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
+    "159.203.33.255:3000"
   ],
   "path": [
     "tb_events"
   ],
   "headers": {
     "Content-Type": "application/json",
-    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTg4YmFmMDc3Yzk1YTY5OGI5ZjFhNWYiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE4OTExNjA5fQ.KCYOqMQu4jLCWnGkWahxegpJ-0UZt6q-LCtURPKquak"
   }
 };
 
@@ -236,46 +236,13 @@ var http = require("http");
 var options = {
   "method": "GET",
   "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
+    "159.203.33.255:3000"
   ],
   "path": [
     "tb_events",
     ""
   ],
   "headers": {}
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-- GET /tb_events/:id => This route allows users to fetch a specific tb_event based on their event ID.
-```
-var http = require("http");
-
-var options = {
-  "method": "GET",
-  "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
-  ],
-  "path": [
-    "tb_events",
-    "5a77ab39c8a317001446428f"
-  ],
-  "headers": {
-    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
-  }
 };
 
 var req = http.request(options, function (res) {
@@ -300,15 +267,15 @@ req.end();
 var options = {
   "method": "GET",
   "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
+    "159.203.33.255:3000"
   ],
   "path": [
     "tb_events",
     "users",
-    "5a771ea0599d18031aec6a76"
+    "5a88b9f277c95a698b9f1a50"
   ],
   "headers": {
-    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTg4YmFmMDc3Yzk1YTY5OGI5ZjFhNWYiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE4OTExNjA5fQ.KCYOqMQu4jLCWnGkWahxegpJ-0UZt6q-LCtURPKquak"
   }
 };
 
@@ -329,19 +296,19 @@ req.end();
  ```
  - DELETE /tb_events/:id => This **private** route gives users to delete tb_events they posted.
  ```
- var http = require("http");
+var http = require("http");
 
 var options = {
   "method": "DELETE",
   "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
+    "159.203.33.255:3000"
   ],
   "path": [
     "tb_events",
-    "5a77ab39c8a317001446428f"
+    "5a88bd9177c95a698b9f1a78"
   ],
   "headers": {
-    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTg4YmFmMDc3Yzk1YTY5OGI5ZjFhNWYiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE4OTExNjA5fQ.KCYOqMQu4jLCWnGkWahxegpJ-0UZt6q-LCtURPKquak"
   }
 };
 
@@ -358,48 +325,6 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.end();
- ```
- - PATCH /tb_events/:id => This **private** route allows users to update the tb_events they created before according to the event ID.
- ```
-var http = require("http");
-
-var options = {
-  "method": "PATCH",
-  "hostname": [
-    "https://secret-tor-77277.herokuapp.com"
-  ],
-  "path": [
-    "tb_events",
-    "5a77ab39c8a317001446428f"
-  ],
-  "headers": {
-    "Content-Type": "application/json",
-    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc3YWIzM2M4YTMxNzAwMTQ0NjQyOGQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NzkyMDUxfQ.XHZwndCewdx1iDy-Ww7nxN73qRlKB_cekv5f2F-3xp4"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({ name: 'body building - advanced level course.',
-  genre: 'Training',
-  date: '2018-02-28',
-  place: [ { geo_lat: 50, geo_lng: 50 } ],
-  age_suggest: [ { start: 18, end: 60 } ],
-  num_people: 20,
-  time_duration: [ { mins: 30, hours: 1 } ],
-  description: [ { comments: 'For totally beginners.' } ] }));
 req.end();
  ```
  
