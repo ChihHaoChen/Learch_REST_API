@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/tb_server.js",
+    "dev": "nodemon server/tb_server.js",
     "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/**/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },
@@ -16,13 +17,18 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
+    "cookie-session": "^2.0.0-beta.3",
     "crypto-js": "^3.1.9-1",
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.1",
     "lodash": "^4.17.4",
     "mongodb": "^3.0.1",
     "mongoose": "^4.13.9",
+    "mongoose-extend-schema": "^1.0.0",
     "nconf": "^0.10.0",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-local": "^1.0.0",
     "underscore": "^1.8.3",
     "validator": "^9.2.0"
   },
