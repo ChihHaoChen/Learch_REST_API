@@ -17,13 +17,26 @@ The codes have been migrated from Heroku to DigitalOcean, and can be accessed th
 [http://159.203.33.255:3000](http//159.203.33.255:3000), where 3000 is the default port number for this API.
 
 In the following usage guide, the keyword **_url_** will be referred to this HTTP address.
-Currently there are two models implemented in this back-end development: _users_ and _tb_events_. Both models support *CRUB* operations with **_Express_** and **_MongoDB_**.
+Currently there are three models implemented in this back-end development: 
+- _users_, 
+- _facebookusers_,
+- _tb_events_. 
+All models support *CRUB* operations with **_Express_** and **_MongoDB_**.
+The difference between _users_ and _facebookusers_ is the field of password,
+since facebook login does not need users' passwords.
 
 Routes about users:
 - POST /users
 - GET /users/me
 - DELETE /users/me/token
 - POST /users/login
+- PATCH /user/profile/:id
+
+Routes about facebookusers:
+- GET /users/facebook/auth
+- GET /users/me
+- DELETE /users/facebook/logout
+- PATCH /users/profile/:userId
 
 Routes about tb_events:
 - POST /tb_events
@@ -39,7 +52,7 @@ All tb_events will be created with users' token as one of the key value.
 
 Regarding the security of users' data, all passwords that users provided will be hashed before being stored in our database. In current stage, the authentication only allows new users to sign up with their **email/password**. There are some other tasks are on-going for TrainingBuddy APP.
 
-- [ ] Integration of Facebook authentication.
+- [x] Integration of Facebook authentication.
 - [ ] To upload pictures or videos of users/tb_events.
 - [ ] Other features may also be supported in the future.
 
