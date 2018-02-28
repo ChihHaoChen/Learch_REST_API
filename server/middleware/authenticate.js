@@ -10,7 +10,6 @@ let authenticate = (req, res, next) => {
         // res.status(401).send();
         return Promise.reject(); // a better approach compared to the above line
       }
-      // res.send(user);
       req.user = user;
       req.token = token;
       next();
