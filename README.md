@@ -74,7 +74,8 @@ All the required libraries can be found in package.json.
 ```
 npm install
 ```
-
+### FLOWCHART
+[f]:
 ### USAGE
 
 [u]: #usage 'Product usage'
