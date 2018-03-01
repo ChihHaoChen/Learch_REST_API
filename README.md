@@ -76,6 +76,7 @@ npm install
 ```
 ### FLOWCHART
 [f]: #flowchart 'Backend API'
+![Optional Text](images/tb_api_flowchart.png)
 ### USAGE
 
 [u]: #usage 'Product usage'
