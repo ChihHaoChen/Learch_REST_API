@@ -6,7 +6,7 @@
 
 ### The API implementation for TrainingBuddy APP
 
-**[INSTALL][i] | [USAGE][u] | [Database][d] | [AUTHOR][auth] | [CONTRIBUTE][cpl] | [LICENSE][cpl] | [SUPPORT][ps]**
+**[INSTALL][i] | [FLOWCHART][f] | [USAGE][u] | [Database][d] | [AUTHOR][auth] | [CONTRIBUTE][cpl] | [LICENSE][cpl] | [SUPPORT][ps]**
 
 ## MOTIVATION
 
