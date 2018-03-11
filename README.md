@@ -10,7 +10,7 @@
 
 ## MOTIVATION
 
-This private repository is used to develope the back-end for the TrainingBudday APP.
+This private repository is used to develope the back-end API for the TrainingBudday APP.
 
 ## GETTING STARTED
 
@@ -482,10 +482,7 @@ You can just [email](chao700716@gmail.com) me.
 
 List of people and project that inspired creation of this one:
 
-## CONTRIBUTION & LICENSE
-  [cpl]:#contribution--license 'Contribution guide & license info'
 
-  
 ## CONTRIBUTION & LICENSE
 [cpl]:#contribution--license 'Contribution guide & license info'
 
