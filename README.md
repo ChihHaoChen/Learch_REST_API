@@ -26,16 +26,10 @@ Currently there are three models implemented in this back-end development:
 * _users_,
 * _facebookusers_,
 * _tb_events_.
-<<<<<<< HEAD
-  All models support _CRUB_ operations with **_Express_** and **_MongoDB_**.
-  The difference between _users_ and _facebookusers_ is the field of password,
-  since facebook login does not need users' passwords.
-=======
 
 All models support _CRUB_ operations with **_Express_** and **_MongoDB_**.
 The difference between _users_ and _facebookusers_ is the field of password,
 since facebook login does not need users' passwords.
->>>>>>> e54bc19ce6cc14cdc1f6890da39bb3438de9ce9e
 
 Routes about users:
 
