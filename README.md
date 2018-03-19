@@ -10,7 +10,7 @@
 
 ## MOTIVATION
 
-This private repository is used to develope the back-end for the TrainingBudday APP.
+This private repository is used to develope the back-end API for the TrainingBudday APP.
 
 ## GETTING STARTED
 
@@ -26,16 +26,10 @@ Currently there are three models implemented in this back-end development:
 * _users_,
 * _facebookusers_,
 * _tb_events_.
-<<<<<<< HEAD
-  All models support _CRUB_ operations with **_Express_** and **_MongoDB_**.
-  The difference between _users_ and _facebookusers_ is the field of password,
-  since facebook login does not need users' passwords.
-=======
 
 All models support _CRUB_ operations with **_Express_** and **_MongoDB_**.
 The difference between _users_ and _facebookusers_ is the field of password,
 since facebook login does not need users' passwords.
->>>>>>> e54bc19ce6cc14cdc1f6890da39bb3438de9ce9e
 
 Routes about users:
 
@@ -474,17 +468,8 @@ req.end();
 All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes). In addition, a [test file](https://github.com/ChihHaoChen/tb_api/blob/master/server/tests/tb_server.test.js) has been uploaded to run self-test, which will be helpful about how to send reqeusts and fetch responses through this API.
 
 ## Database
-<<<<<<< HEAD
-
 [d]: #database 'Module\'s API description'
 The database employed in this back-end API is installed in DigitalOcean, a platform of Database-as-a-Service for MongoDB.
-Currently, all the users/tb_events data is stored in [ds125058.mlab.com], and can be accessed through [Robo3T](https://robomongo.org/) with the account(heroku_cmc27t52)/password(49is08vu6t3ird8chd9t494igo), and port number shown below.
-=======
->>>>>>> e54bc19ce6cc14cdc1f6890da39bb3438de9ce9e
-
-[d]: #database 'Module\'s API description'
-The database employed in this back-end API is installed in DigitalOcean, a platform of Database-as-a-Service for MongoDB.
-The database can be accessed through [Robo3T](https://robomongo.org/) with the SSH connect to your local terminal.
 
 ## AUTHOR
 
@@ -497,15 +482,9 @@ You can just [email](chao700716@gmail.com) me.
 
 List of people and project that inspired creation of this one:
 
-* Github guides for their precious [documenting your project](https://guides.github.com/features/wikis/#creating-a-readme) article concerning readme creation
-<<<<<<< HEAD
-  ## CONTRIBUTION & LICENSE
-  [cpl]:#contribution--license 'Contribution guide & license info'
-=======
-  
+
 ## CONTRIBUTION & LICENSE
 [cpl]:#contribution--license 'Contribution guide & license info'
->>>>>>> e54bc19ce6cc14cdc1f6890da39bb3438de9ce9e
 
 Check out (if any) <a href='/CONTRIBUTION'>contribution guide</a> or <a href='/LICENSE'>license</a> for more details.
 
