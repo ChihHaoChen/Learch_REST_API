@@ -1,7 +1,7 @@
 let { User } = require('./../models/user');
 let { facebookUser } = require('./../models/facebookuser');
 
-let authenticate = (req, res, next) => {
+const authenticate = (req, res, next) => {
   let token = req.header('x-auth');
 
   User.findByToken(token)

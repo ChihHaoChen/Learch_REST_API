@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const { ObjectID } = require('mongodb');
-const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const keys = require('../config/keys');
@@ -11,9 +10,9 @@ let { User } = require('../models/user');
 let { facebookUser } = require('../models/facebookuser');
 let { authenticate } = require('../middleware/authenticate');
 
+require('../config/passport');
+
 module.exports = app => {
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
   // POST/users
   app.post('/users', (req, res) => {
     let user = new User(_.pick(req.body, ['email', 'password']));

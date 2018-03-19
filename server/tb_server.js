@@ -1,26 +1,21 @@
 require('./config/config');
-//const passport = require('passport-facebook');
-const jwt = require('jsonwebtoken');
-const _ = require('lodash');
-const { ObjectID } = require('mongodb');
+const path = require('path');
+const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
-const passport = require('passport');
 const cookieSession = require('cookie-session');
-
+const passport = require('passport');
+const socketIO = require('socket.io');
 const keys = require('./config/keys');
-let { mongoose } = require('./db/mongoose');
-let { Tb_event } = require('./models/tb_event');
-let { User } = require('./models/user');
-let { facebookUser } = require('./models/facebookuser');
-let { authenticate } = require('./middleware/authenticate');
-require('./config/passport');
 
 
+const publicPath = path.join(__dirname, '../public');
+const port = process.env.PORT || 3000;
 
 const app = express();
-
-const port = process.env.PORT;
+const server = http.createServer(app);
+//const port = process.env.PORT;
+app.use(express.static(publicPath));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,12 +30,18 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+const io = socketIO(server);
+io.path('/chats')
 require('./routes/tbUserRoutes')(app);
 require('./routes/tbEventRoutes')(app);
-//if(!module.parent) {
-app.listen(port, () => {
-  console.log(`Started up at port ${port}.`);
+require('./socket/socket')(app, io);
+
+
+server.listen(port, () => {
+  console.log(`Started up on ${port}.`);
 });
+
+
 
 
 module.exports = { app }; //since the module we want to export also called app

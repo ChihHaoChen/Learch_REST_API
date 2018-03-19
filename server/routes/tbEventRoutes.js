@@ -1,12 +1,8 @@
-const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const { ObjectID } = require('mongodb');
 
-const keys = require('../config/keys');
 let { mongoose } = require('../db/mongoose');
 let { Tb_event } = require('../models/tb_event');
-let { User } = require('../models/user');
-let { facebookUser } = require('../models/facebookuser');
 let { authenticate } = require('../middleware/authenticate');
 
 module.exports = app => {
@@ -149,5 +145,50 @@ module.exports = app => {
       .catch(err => {
         res.status(400).send(err);
       });
+  });
+
+  app.patch('/tb_events/join/:id', authenticate, async (req, res) => {
+    const id = req.params.id;
+    const userId = req.user._id;
+    if (!ObjectID.isValid(id)) {
+      return res.status(400).send('The data with this ID is not found');
+    }
+    
+    try {
+      const tb_event = await Tb_event.findOneAndUpdate({
+        _id: id
+      }, {
+        $addToSet : { participants: { _participantId: userId }}
+      }, {
+        new: true,
+        upsert: false
+      });
+      res.status(200).send({ tb_event });
+    } catch(e) {
+      //throw new Error(`Unable to join the chatting room of event ${id}`);
+      res.status(400).send(`Unable to join the chatting room of event ${id}`);
+    }
+  });
+
+  app.patch('/tb_events/drop/:id', authenticate, async (req, res) => {
+    const id = req.params.id;
+    const userId = req.user._id;
+    if (!ObjectID.isValid(id)) {
+      return res.status(400).send('The data with this ID is not found');
+    }
+
+    try {
+      const tb_event = await Tb_event.findOneAndUpdate({
+        _id: id
+      }, {
+        $pull : { participants: { _participantId: userId }}
+      }, {
+        new: true
+      });
+      res.status(200).send({ tb_event });
+    } catch(e) {
+      //throw new Error(`Unable to leave the chatting room of event ${id}`);
+      res.status(400).send(`Unable to leave the chatting room of event ${id}`);
+    }
   });
 }
