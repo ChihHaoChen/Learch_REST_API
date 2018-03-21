@@ -31,10 +31,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const io = socketIO(server);
+app.set('socketio', io);
+
 io.path('/chats')
 require('./routes/tbUserRoutes')(app);
 require('./routes/tbEventRoutes')(app);
-require('./socket/socket')(app, io);
+require('./socket/socket')(app);
 
 
 server.listen(port, () => {

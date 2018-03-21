@@ -15,14 +15,13 @@ let { authenticate } = require('../middleware/authenticate');
 let users = new Users();
 let tb_event_participated = new Tb_event;
 
-module.exports = (app, io) => {
+module.exports = (app) => {
   //let chatRoute = express.Router();
   //chatRoute.use('/', (req, res) => {
   app.get('/chats/:id', authenticate, async (req, res) => {
     const id = req.params.id;
     const userId = req.user._id;
-    console.log(`Event id is ${id}`);
-    console.log(`User id is ${userId}`);
+    
     if (!ObjectID.isValid(id)) {
       return res.status(400).send('The event with this ID is not found.');
     }
@@ -39,7 +38,7 @@ module.exports = (app, io) => {
       else {
         tb_event_participated = tb_event;
 
-        chatConnection(io, tb_event_participated,req);
+        chatConnection(tb_event_participated,req);
 
         res.status(200).send({ tb_event_participated });
       }
@@ -49,28 +48,36 @@ module.exports = (app, io) => {
     }
   });
 
-  function chatConnection(io, tb_event, req) {
+  function chatConnection(tb_event, req) {
     const id = req.params.id;
     const userId = req.user._id;
+    let socketArr = [];
+    const io = req.app.get('socketio');
+    const userName = req.user.name[0].userName || userId;
     console.log(`Connected!`);
     io.on('connection', socket => {
-      console.log(`Welcome to ${tb_event[0].name}`);
-      // Listener of 'join' @ Server
+      // Remove the Connectio listener for subsequent connections with the same socket.id
+      // removeAllListeners('connection') avoids the multiple message sending when
+      // more users are logging into the same chat room.
+      socketArr.push(socket.id);
+      if (socketArr[0] === socket.id) {
+        io.removeAllListeners('connection');
+      }
       socket.on('join', (callback) => {
         socket.join(id);
         users.removeUser(socket.id) // to have users left from previous chat rooms
-        users.addUser(socket.id, userId, id); // add user to the new room
-        console.log(`From database, socket_id is ${socket.id}, name is ${userId}, room is ${id}`);
+        users.addUser(socket.id, userId, userName, id); // add user to the new room
+
         io.to(id).emit('updateUserList', users.getUserList(id));
 
         socket.emit(
           'newMessage',
-          generateMessage('Admin', `Welcome to the event of ${id}`)
+          generateMessage('Admin', `Welcome to the event of \"${tb_event[0].name}\"`)
         );
 
         socket.broadcast.to(id).emit(
           'newMessage',
-          generateMessage('Admin', `${userId} has joined`)
+          generateMessage('Admin', `${userName} has joined`)
         );
         callback();
       });
@@ -79,10 +86,8 @@ module.exports = (app, io) => {
         let user = users.getUser(socket.id);
 
         if (user && isRealString(message.text)) {
-          io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
-          console.log(`User is ${user.name} in socket.id ${socket.id}`);
-          const counter = io.sockets.clients(socket.room).length;
-          console.log(`Counter number is ${counter}`);
+          io.to(user.room).emit('newMessage', generateMessage(user.userName, message.text));
+          console.log(`User is ${user.userName} in socket.id ${socket.id}`);
         }
         callback();
       });
@@ -93,7 +98,7 @@ module.exports = (app, io) => {
         if (user) {
           io.to(user.room).emit('updateUserList', users.getUserList(user.room));
 
-          io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left.`));
+          io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.userName} has left.`));
         }
       });
     });

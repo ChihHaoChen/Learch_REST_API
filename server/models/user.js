@@ -51,6 +51,8 @@ let UserSchema = new mongoose.Schema({
       userName: {
         type: String
       }
+    }, {
+      _id: false
     }
   ],
   address: [
@@ -73,6 +75,8 @@ let UserSchema = new mongoose.Schema({
       postCode: {
         type: String
       }
+    }, {
+      _id: false
     }
   ],
   title: {
