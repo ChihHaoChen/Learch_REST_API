@@ -621,7 +621,7 @@ req.end();
 ```
 
 * GET /api/images/upload => This **private** route allows users to upload images either about their profiles and tb_event posts. Please refer to the following diagram for the detailed step to upload images.
-(images/uploadImages.png)
+![Optional Text](images/uploadImages.png)
 
 ```
 var http = require("http");
