@@ -55,6 +55,11 @@ Routes about tb_events:
 * DELETE /tb_events/:id
 * PATCH /tb_events/:id
 
+Updated routes about tb_events and for chatting between users who participate same events @ 0321/2018:
+* PATCH /tb_events/join/:id 
+* PATCH /tb_events/drop/:id 
+* GET /chats/:id 
+
 Public routes can be invokded without tokens, while private ones require tokens to execute the operations.
 Therefore, users can check the tb_events created by other users, but they can only delete and update their own tb_events.
 All tb_events will be created with users' token as one of the key value.
@@ -62,6 +67,7 @@ All tb_events will be created with users' token as one of the key value.
 Regarding the security of users' data, all passwords that users provided will be hashed before being stored in our database. In current stage, the authentication only allows new users to sign up with their **email/password**. There are some other tasks are on-going for TrainingBuddy APP.
 
 * [x] Integration of Facebook authentication.
+* [x] Introduction of new feature - chatting.
 * [ ] To upload pictures or videos of users/tb_events.
 * [ ] Other features may also be supported in the future.
 
@@ -465,6 +471,152 @@ var req = http.request(options, function (res) {
 req.end();
 ```
 
+* PATCH /tb_events/join/:id => This **private** route gives users to join events.
+
+```
+var http = require("http");
+
+var options = {
+  "method": "PATCH",
+  "hostname": [
+    "159.203.33.255:3000"
+  ],
+  "path": [
+    "tb_events",
+    "join",
+    "5aa70bbb58b72c16c45a8a7c"
+  ],
+  "headers": {
+    "Content-Type": "application/json",
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTk2ZDk4NWQxNDA5NzZhZWMwN2I1ODAiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTIxNDg0OTE2fQ.tOKSZeZfBwTqSr7DraULBahPlB9gNAtCpKFLWgVXqB4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ gender: 'female',
+  name: 
+   [ { firstName: 'Catherine',
+       middleName: 'MiddleName',
+       lastName: 'Kate',
+       userName: 'CK' } ],
+  address: 
+   [ { street: 'Monkland 4410',
+       city: 'Montreal',
+       province: 'Quebec',
+       state: 'NA',
+       country: 'Canada',
+       postCode: 'H4B 2S9' } ],
+  title: 'Mrs.',
+  birthOfDate: [ { year: '1971', month: 'Jan', date: '10' } ],
+  phone: '514-872-8588',
+  occupation: 'Trainer',
+  rate: 4 }));
+req.end();
+```
+
+* PATCH /tb_events/drop/:id => This **private** route gives users to drop themselves from events.
+
+```
+var http = require("http");
+
+var options = {
+  "method": "PATCH",
+  "hostname": [
+    "159.203.33.255:3000"
+  ],
+  "path": [
+    "tb_events",
+    "drop",
+    "5aa70bbb58b72c16c45a8a7c"
+  ],
+  "headers": {
+    "Content-Type": "application/json",
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTk2ZDk4NWQxNDA5NzZhZWMwN2I1ODAiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTIxNDg0OTE2fQ.tOKSZeZfBwTqSr7DraULBahPlB9gNAtCpKFLWgVXqB4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ gender: 'female',
+  name: 
+   [ { firstName: 'Catherine',
+       middleName: 'MiddleName',
+       lastName: 'Kate',
+       userName: 'CK' } ],
+  address: 
+   [ { street: 'Monkland 4410',
+       city: 'Montreal',
+       province: 'Quebec',
+       state: 'NA',
+       country: 'Canada',
+       postCode: 'H4B 2S9' } ],
+  title: 'Mrs.',
+  birthOfDate: [ { year: '1971', month: 'Jan', date: '10' } ],
+  phone: '514-872-8588',
+  occupation: 'Trainer',
+  rate: 4 }));
+req.end();
+```
+
+
+* GET /chats/:id => This **private** route used to set up the channel for chatting associated to a specific event.
+
+```
+var http = require("http");
+
+var options = {
+  "method": "GET",
+  "hostname": [
+    "159.203.33.255:3000"
+  ],
+  "path": [
+    "chats",
+    "5aa576547ee1da097beb76b0"
+  ],
+  "headers": {
+    "Content-Type": "application/json",
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTk2ZDk4NWQxNDA5NzZhZWMwN2I1ODAiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTIxNDg0OTE2fQ.tOKSZeZfBwTqSr7DraULBahPlB9gNAtCpKFLWgVXqB4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
 All the requests can also be found in [POSTMAN Documentation](https://documenter.getpostman.com/view/3019646/tb_api/7TT8VDJ#error-codes). In addition, a [test file](https://github.com/ChihHaoChen/tb_api/blob/master/server/tests/tb_server.test.js) has been uploaded to run self-test, which will be helpful about how to send reqeusts and fetch responses through this API.
 
 ## Database
