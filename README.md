@@ -54,11 +54,12 @@ Routes about tb_events:
 * GET /tb_events/users/:userId
 * DELETE /tb_events/:id
 * PATCH /tb_events/:id
-
-Updated routes about tb_events and for chatting between users who participate same events @ 0321/2018:
 * PATCH /tb_events/join/:id 
 * PATCH /tb_events/drop/:id 
+
+Routes about some other features:
 * GET /chats/:id 
+* GET /api/images/upload
 
 Public routes can be invokded without tokens, while private ones require tokens to execute the operations.
 Therefore, users can check the tb_events created by other users, but they can only delete and update their own tb_events.
@@ -68,7 +69,8 @@ Regarding the security of users' data, all passwords that users provided will be
 
 * [x] Integration of Facebook authentication.
 * [x] Introduction of new feature - chatting.
-* [ ] To upload pictures or videos of users/tb_events.
+* [x] To upload pictures or videos of users/tb_events.
+* [ ] Push Notifications.
 * [ ] Other features may also be supported in the future.
 
 ### INSTALLATION
@@ -598,6 +600,41 @@ var options = {
   ],
   "headers": {
     "Content-Type": "application/json",
+    "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTk2ZDk4NWQxNDA5NzZhZWMwN2I1ODAiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTIxNDg0OTE2fQ.tOKSZeZfBwTqSr7DraULBahPlB9gNAtCpKFLWgVXqB4"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+* GET /api/images/upload => This **private** route allows users to upload images either about their profiles and tb_event posts.
+```
+var http = require("http");
+
+var options = {
+  "method": "GET",
+  "hostname": [
+    "159.203.33.255:3000"
+  ],
+  "path": [
+    "api",
+    "images",
+    "upload"
+  ],
+  "headers": {
     "x-auth": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTk2ZDk4NWQxNDA5NzZhZWMwN2I1ODAiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTIxNDg0OTE2fQ.tOKSZeZfBwTqSr7DraULBahPlB9gNAtCpKFLWgVXqB4"
   }
 };
