@@ -36,6 +36,7 @@ app.set('socketio', io);
 io.path('/chats')
 require('./routes/tbUserRoutes')(app);
 require('./routes/tbEventRoutes')(app);
+require('./routes/uploadRoutes')(app);
 require('./socket/socket')(app);
 
 

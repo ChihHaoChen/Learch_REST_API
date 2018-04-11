@@ -15,6 +15,7 @@
   "author": "Chih-Hao Chen",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.222.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "cookie-session": "^2.0.0-beta.3",
@@ -34,6 +35,7 @@
     "path": "^0.12.7",
     "socket.io": "^2.0.4",
     "underscore": "^1.8.3",
+    "uuid": "^3.2.1",
     "validator": "^9.2.0"
   },
   "devDependencies": {
