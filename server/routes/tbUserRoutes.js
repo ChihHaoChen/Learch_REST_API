@@ -136,7 +136,6 @@ module.exports = app => {
     const token = req.user.tokens[0].token;
     if (token) {
       res.header('x-auth', token).send(req.user);
-      //res.setHeader('x-auth', token);
     } else {
       res.status(400).send(`Token is not found.`);
     }

@@ -16,6 +16,7 @@ module.exports = app => {
 
     s3.getSignedUrl('putObject', {
       Bucket: 'training-buddy-bucket',
+      ContentEncoding: 'base64',
       ContentType: 'image/jpg',
       Key: key
     }, (err, url) => {
