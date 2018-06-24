@@ -100,6 +100,9 @@ let facebookUserSchema = new mongoose.Schema({
   },
   rate: {
     type: Number
+  },
+  profilePic: {
+    type: String
   }
 });
 
