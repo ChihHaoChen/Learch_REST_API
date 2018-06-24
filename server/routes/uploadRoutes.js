@@ -12,12 +12,11 @@ const s3 = new AWS.S3({
 
 module.exports = app => {
   app.get('/api/images/upload', authenticate, (req, res) => {
-    const key = `${req.user.id}/${uuid()}.jpeg`;
-
+    const key = `${req.user.id}/${uuid()}.png`;
     s3.getSignedUrl('putObject', {
       Bucket: 'training-buddy-bucket',
-      ContentEncoding: 'base64',
-      ContentType: 'image/jpg',
+      //ContentEncoding: 'base64',
+      ContentType: 'image/png',
       Key: key
     }, (err, url) => {
       res.send({ key, url });
