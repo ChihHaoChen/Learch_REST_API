@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/tb_server.js",
+    "dev": "nodemon server/tb_server.js",
     "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/**/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },
@@ -14,23 +15,35 @@
   "author": "Chih-Hao Chen",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.401.0",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
+    "cookie-session": "^2.0.0-beta.3",
     "crypto-js": "^3.1.9-1",
-    "express": "^4.16.2",
-    "jsonwebtoken": "^8.1.1",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "jsonwebtoken": "^8.4.0",
     "link": "^0.1.5",
-    "lodash": "^4.17.4",
-    "mongodb": "^3.0.1",
-    "mongoose": "^4.13.9",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "mongodb": "^3.1.13",
+    "mongoose": "^4.13.18",
+    "mongoose-extend-schema": "^1.0.0",
     "nconf": "^0.10.0",
-    "underscore": "^1.8.3",
-    "validator": "^9.2.0"
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "socket.io": "^2.2.0",
+    "underscore": "^1.9.1",
+    "update": "^0.7.4",
+    "uuid": "^3.3.2",
+    "validator": "^9.4.1"
   },
   "devDependencies": {
-    "expect": "^22.1.0",
-    "mocha": "^5.0.0",
-    "nodemon": "^1.14.11",
-    "supertest": "^3.0.0"
+    "expect": "^22.4.3",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.10",
+    "supertest": "^3.4.2"
   }
 }

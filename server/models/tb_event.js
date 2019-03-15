@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 
-let Tb_event = mongoose.model('Tb_event', {
+let EventSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -102,7 +102,15 @@ let Tb_event = mongoose.model('Tb_event', {
   _creator: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
-  }
+  },
+  participants: [{
+    _participantId: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+    _id: false
+  }]
 });
+
+let Tb_event = mongoose.model('Tb_event', EventSchema);
 
 module.exports = { Tb_event };
