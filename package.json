@@ -15,9 +15,11 @@
   "author": "Chih-Hao Chen",
   "license": "ISC",
   "dependencies": {
+    "assign-deep": "^1.0.1",
     "aws-sdk": "^2.401.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "braces": "^3.0.2",
     "cookie-session": "^2.0.0-beta.3",
     "crypto-js": "^3.1.9-1",
     "express": "^4.16.4",
