@@ -106,7 +106,9 @@ module.exports = app => {
       'birthOfDate',
       'phone',
       'occupation',
-      'rate'
+      'rate',
+      'profilePic',
+      'profilePicColor'
     ];
     let body = _.pick(req.body, user_profile_update);
 

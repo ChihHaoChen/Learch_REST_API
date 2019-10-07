@@ -106,6 +106,9 @@ let UserSchema = new mongoose.Schema({
   },
   profilePic: {
     type: String
+  },
+  profilePicColor: {
+    type: String
   }
 });
 
