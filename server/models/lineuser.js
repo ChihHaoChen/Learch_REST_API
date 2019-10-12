@@ -5,18 +5,22 @@ const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 const extendSchema = require('mongoose-extend-schema');
 
-let facebookUserSchema = new mongoose.Schema({
+let lineUserSchema = new mongoose.Schema({
+  _id: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
-    required: true,
-    minlength: 1,
-    trim: true,
-    default: null,
-    unique: true,
-    validate: {
-      validator: validator.isEmail,
-      message: '{VALUE} is not a valid email.'
-    }
+    required: false
+    // minlength: 1,
+    // trim: true,
+    // default: null,
+    // unique: true,
+    // validate: {
+    //   validator: validator.isEmail,
+    //   message: '{VALUE} is not a valid email.'
+    // }
   },
   password: {
     type: String,
@@ -106,25 +110,22 @@ let facebookUserSchema = new mongoose.Schema({
   }
 });
 
-facebookUserSchema.methods.toJSON = function() {
+lineUserSchema.methods.toJSON = function() {
   let user = this;
   let userObject = user.toObject();
-
-  // return _.pick(userObject, ['_id', 'email']);
   return _.omit(userObject, ['password', 'tokens']);
 };
 
-facebookUserSchema.statics.findByToken = function(token) {
+lineUserSchema.statics.findByToken = function(token) {
   let User = this;
 
   return User.findOne({
-    // _id: decoded._id,
     'tokens.token': token,
     'tokens.access': 'auth'
   });
 };
 
-facebookUserSchema.methods.removeToken = function(token) {
+lineUserSchema.methods.removeToken = function(token) {
   let user = this;
 
   return user.update({
@@ -134,6 +135,6 @@ facebookUserSchema.methods.removeToken = function(token) {
   });
 };
 
-let facebookUser = mongoose.model('facebookusers', facebookUserSchema, 'users');
+let lineUser = mongoose.model('lineusers', lineUserSchema, 'users');
 
-module.exports = { facebookUser };
+module.exports = { lineUser };

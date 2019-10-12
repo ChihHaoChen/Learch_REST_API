@@ -8,6 +8,7 @@ let { mongoose } = require('../db/mongoose');
 let { Tb_event } = require('../models/tb_event');
 let { User } = require('../models/user');
 let { facebookUser } = require('../models/facebookuser');
+let { lineUser } = require('../models/lineuser');
 let { authenticate } = require('../middleware/authenticate');
 
 require('../config/passport');
@@ -74,7 +75,7 @@ module.exports = app => {
 
   // GET /users/auth/facebook/callback
   app.get(
-    '/users/auth/facebook/callback',
+    '/users/facebook/auth/callback',
     passport.authenticate('facebook', {
       successRedirect: '/users/facebook/me',
       failureRedirect: '/users/facebook/auth'
@@ -133,6 +134,47 @@ module.exports = app => {
   });
 
   app.get('/users/facebook/me', (req, res) => {
+    const token = req.user.tokens[0].token;
+    if (token) {
+      res.header('x-auth', token).send(req.user);
+    } else {
+      res.status(400).send(`Token is not found.`);
+    }
+  });
+
+  // GET /users/auth/line => LINE Sign up
+  app.get(
+    '/users/line/auth',
+    passport.authenticate('line', {
+      scope: ['profile', 'openid'],
+      session: true
+    })
+  );
+
+  // GET /users/auth/facebook/callback
+  app.get(
+    '/users/line/auth/callback',
+    passport.authenticate('line', {
+      successRedirect: '/users/line/me',
+      failureRedirect: '/users/line/auth'
+    })
+  );
+
+  app.delete('/users/line/logout', (req, res) => {
+    console.log('user to be removed =>', req.user)
+    req.user
+      .removeToken(req.token)
+      .then(() => {
+        req.logout();
+        res.status(200).send();
+      })
+      .catch(() => {
+        res.status(400).send();
+      });
+  });
+
+  app.get('/users/line/me', (req, res) => {
+    console.log("token is", req.user.tokens[0].token);
     const token = req.user.tokens[0].token;
     if (token) {
       res.header('x-auth', token).send(req.user);

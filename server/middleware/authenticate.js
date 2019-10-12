@@ -1,5 +1,6 @@
 let { User } = require('./../models/user');
 let { facebookUser } = require('./../models/facebookuser');
+let { lineUser } = require('./../models/lineuser');
 
 const authenticate = (req, res, next) => {
   let token = req.header('x-auth');
@@ -12,6 +13,7 @@ const authenticate = (req, res, next) => {
       }
       req.user = user;
       req.token = token;
+      console.log("token checked! =>", req.user, req.token)
       next();
     })
     .catch(e => {
@@ -26,7 +28,19 @@ const authenticate = (req, res, next) => {
           next();
         })
         .catch(eFB => {
-          res.status(401).send();
+          lineUser
+            .findByToken(token)
+            .then(user => {
+              if (!user) {
+                return Promise.reject();
+              }
+              req.user = user;
+              req.token = token;
+              next();
+            })
+            .catch(eLine => {
+              res.status(401).send();
+            })
         });
     });
 };

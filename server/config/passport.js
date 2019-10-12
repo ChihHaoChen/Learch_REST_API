@@ -2,20 +2,36 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const LineStrategy = require('passport-line-auth').Strategy;
 
 // load up the user model
 const { facebookUser } = require('../models/facebookuser');
+const { lineUser } = require('../models/lineuser')
 
 // load the auth variables
 const configAuth = require('./keys');
 
+// The user id (you provide as the second argument of the done function) is saved in the session 
+// and is later used to retrieve the whole object via the deserializeUser function.
+//serializeUser determines which data of the user object should be stored in the session. 
+//The result of the serializeUser method is attached to the session as req.session.passport.user = {}
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
   facebookUser.findById(id, (err, user) => {
-    done(err, user);
+    if (user) {
+      done(err, user);
+    }
+    else {
+      lineUser.findById(id, (err, user) => {
+        if (err)  {
+          throw err
+        }
+        done(err, user);
+      })
+    }
   });
 });
 
@@ -66,3 +82,46 @@ passport.use(
     }
   )
 );
+
+passport.use(
+new LineStrategy({
+  channelID: configAuth.lineAuth.channelID,
+  channelSecret: configAuth.lineAuth.channelSecret,
+  callbackURL: configAuth.lineAuth.callbackURL,
+  scope: ['profile', 'openid'],
+  botPrompt: 'normal'
+},
+(token, refreshToken, profile, cb) => {
+  let profileId = profile.id;
+  let pictureUrl = profile.pictureUrl;
+  let name = profile.displayName;
+  let access = 'auth';
+
+  lineUser.findOne({ _id: profileId }, (err, existingUser) => {
+    if (err) {
+      return cb(err);
+    }
+    if (existingUser) {
+      existingUser.tokens = existingUser.tokens.concat([{ access, token }]);
+      existingUser.save(err => {
+        if (err)  {
+          throw err;
+        }
+        return cb(null, existingUser);
+      });
+    }
+    else {
+      var user = new lineUser({ _id: profileId });
+      user.tokens = user.tokens.concat([{ access, token }]);
+      user.name = [{ firstName: "", middleName: "", lastName: "", userName: name }]
+      user.profilePic = pictureUrl
+      user.save(err => {
+        if (err)  {
+          throw err;
+        }
+        return cb(null, user);
+      })
+    }
+  });
+}
+));

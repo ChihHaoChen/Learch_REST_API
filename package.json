@@ -23,14 +23,16 @@
     "express": "^4.16.2",
     "http": "0.0.0",
     "jsonwebtoken": "^8.1.1",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.15",
     "moment": "^2.21.0",
     "mongodb": "^3.0.1",
-    "mongoose": "^4.13.9",
+    "mongoose": "^4.13.19",
     "mongoose-extend-schema": "^1.0.0",
     "nconf": "^0.10.0",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
+    "passport-line": "0.0.4",
+    "passport-line-auth": "^0.2.7",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "socket.io": "^2.0.4",
@@ -39,7 +41,7 @@
     "validator": "^9.2.0"
   },
   "devDependencies": {
-    "expect": "^22.1.0",
+    "expect": "^25.0.0",
     "mocha": "^5.0.0",
     "nodemon": "^1.14.11",
     "supertest": "^3.0.0"

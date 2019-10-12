@@ -44,7 +44,4 @@ server.listen(port, () => {
   console.log(`Started up on ${port}.`);
 });
 
-
-
-
 module.exports = { app }; //since the module we want to export also called app
